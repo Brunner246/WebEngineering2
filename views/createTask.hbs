@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Task</title>
+    <style>
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 300px;
+            padding: 5px;
+        }
+
+        .form-group input[type="submit"] {
+            margin-top: 10px;
+            width: 100px;
+            padding: 5px 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Create Task</h1>
+<form action="/tasks" method="post">
+    <div class="form-row">
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
+        </div>
+        <div class="form-group">
+            <label for="assignedTo">Assigned To:</label>
+            <input type="text" id="assignedTo" name="assignedTo" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create Task">
+    </div>
+</form>
+</body>
+</html>
