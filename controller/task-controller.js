@@ -2,14 +2,12 @@ import taskStore from '../services/taskService.js';
 
 export class TaskController {
     createTask(req, res) {
-        const { description, assignedTo } = req.body;
-        const task = taskStore.add(description, assignedTo);
-        res.render('createTask', { task });
+        console.log(req.body);
+        res.render('newTask');
     }
 
     renderTaskDetails(req, res) {
-        const { task } = req; // Retrieve the task from the request object
-        res.render('taskDetails', { task });
+        res.render('newTask', {taskName: req.body.taskName}); // taskName: req.userSettings.orderBy
     }
 
     deleteTask(req, res) {
