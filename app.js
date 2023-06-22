@@ -5,6 +5,7 @@ import session from 'express-session';
 import exphbs from 'express-handlebars';
 
 import {indexRoutes} from './routes/index-routes.js';
+import {taskRoutes} from './routes/task-routes.js';
 import {helpers} from './utils/handlebar-util.js'
 import {sessionUserSettings} from './utils/session-middleware.index.js'
 
@@ -29,4 +30,5 @@ app.use(bodyParser.urlencoded({extended: true})); // default was false
 app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
+app.use("/tasks", taskRoutes);
 
