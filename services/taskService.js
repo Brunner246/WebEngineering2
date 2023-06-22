@@ -1,10 +1,27 @@
 class Task {
-    constructor(id, description, assignedTo) {
+    constructor(id, description) {
         this.id = id;
         this.description = description;
-        this.assignedTo = assignedTo;
         this.creationDate = new Date();
         this.completed = false;
+    }
+    isCompleted() {
+        return this.completed;
+    }
+    setCompleted(completed) {
+        this.completed = completed;
+    }
+
+    getDescription() {
+        return this.description;
+    }
+
+    setDescription(description) {
+        this.description = description;
+    }
+
+    getCreationDate() {
+        return this.creationDate;
     }
 }
 
@@ -13,8 +30,8 @@ class TaskStore {
         this.tasks = [];
     }
 
-    add(description, assignedTo) {
-        const task = new Task(this.tasks.length, description, assignedTo);
+    add(description) {
+        const task = new Task(this.tasks.length, description);
         this.tasks.push(task);
         return task;
     }
