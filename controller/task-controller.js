@@ -1,6 +1,6 @@
 import taskStore from '../services/taskService.js';
 
-class TaskController {
+export class TaskController {
     createTask(req, res) {
         const { description, assignedTo } = req.body;
         const task = taskStore.add(description, assignedTo);
@@ -38,5 +38,5 @@ class TaskController {
     }
 }
 
-const taskController = new TaskController();
-export default taskController;
+export const taskController = new TaskController();
+
