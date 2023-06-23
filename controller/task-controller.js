@@ -1,40 +1,77 @@
 import taskStore from '../services/taskService.js';
 
 export class TaskController {
-    createTask(req, res) {
-        console.log(req.body);
-        res.render('newTask');
+    async createTask(req, res) {
+        const description = req.body.taskName;
+        try {
+            await taskStore.add(description);
+            res.redirect('/tasks');
+        } catch (error) {
+            res.render('error', { error });
+        }
     }
 
-    renderTaskDetails(req, res) {
-        res.render('newTask', {taskName: req.body.taskName}); // taskName: req.userSettings.orderBy
-    }
+    // async deleteTask(req, res) {
+    //     const id = parseInt(req.params.id);
+    //     try {
+    //         const task = await taskStore.delete(id);
+    //         if (task) {
+    //             res.redirect('/tasks');
+    //         } else {
+    //             res.render('taskNotFound');
+    //         }
+    //     } catch (error) {
+    //         res.render('error', { error });
+    //     }
+    // }
 
     deleteTask(req, res) {
-        const id = parseInt(req.params.id);
+        const id = req.params.id;
         const task = taskStore.delete(id);
         if (task) {
-            res.render('deleteTask', { task });
+            res.redirect('/tasks');
         } else {
             res.render('taskNotFound');
         }
     }
 
-    getTask(req, res) {
+    async editTask(req, res) {
         const id = parseInt(req.params.id);
-        const task = taskStore.get(id);
-        if (task) {
-            res.render('task', { task });
-        } else {
-            res.render('taskNotFound');
+        try {
+            const task = await taskStore.get(id);
+            if (task) {
+                res.render('editTask', { task });
+            } else {
+                res.render('taskNotFound');
+            }
+        } catch (error) {
+            res.render('error', { error });
         }
     }
 
-    getAllTasks(req, res) {
-        const tasks = taskStore.all();
-        res.render('allTasks', { tasks });
+    async updateTask(req, res) {
+        const id = parseInt(req.params.id);
+        const description = req.body.taskName;
+        try {
+            const task = await taskStore.update(id, description);
+            if (task) {
+                res.redirect('/tasks');
+            } else {
+                res.render('taskNotFound');
+            }
+        } catch (error) {
+            res.render('error', { error });
+        }
+    }
+
+    async getAllTasks(req, res) {
+        try {
+            const tasks = await taskStore.all();
+            res.render('index', { tasks });
+        } catch (error) {
+            res.render('error', { error });
+        }
     }
 }
 
 export const taskController = new TaskController();
-

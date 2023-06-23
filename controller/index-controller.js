@@ -3,13 +3,11 @@ export class IndexController {
         res.render("index", {data: "Hello World", dark: false});
         // res.redirect("/orders");
     };
-    createOrder(req, res) {
-        res.render("createOrder", {data: "Hello World", dark: false});
-    };
 
-    createPizza(req, res) {
-        res.render("succeeded", {data: "Hello World", dark: false});
+    createTask(req, res) {
+        res.redirect("/tasks/new");
     }
+
 }
 
 export const indexController = new IndexController();

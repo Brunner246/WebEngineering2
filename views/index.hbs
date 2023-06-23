@@ -5,3 +5,21 @@
     <input type="submit" value="Create Task">
 </form>
 
+{{#if tasks.length}}
+    <h2>All Tasks:</h2>
+    <ul>
+        {{#each tasks}}
+            <li>
+                <span>{{this.description}}</span>
+                <form action="/tasks/{{this.id}}/delete" method="post" style="display: inline;">
+                    <button type="submit">Delete</button>
+                </form>
+                <form action="/tasks/{{this.id}}/edit" method="get" style="display: inline;">
+                    <button type="submit">Edit</button>
+                </form>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No tasks found.</p>
+{{/if}}
