@@ -7,7 +7,7 @@ export class TaskController {
             await taskStore.add(description);
             res.redirect('/tasks');
         } catch (error) {
-            res.render('error', { error });
+            res.render('error', {error});
         }
     }
 
@@ -40,12 +40,12 @@ export class TaskController {
         try {
             const task = await taskStore.get(id);
             if (task) {
-                res.render('editTask', { task });
+                res.render('editTask', {task});
             } else {
                 res.render('taskNotFound');
             }
         } catch (error) {
-            res.render('error', { error });
+            res.render('error', {error});
         }
     }
 
@@ -60,16 +60,16 @@ export class TaskController {
                 res.render('taskNotFound');
             }
         } catch (error) {
-            res.render('error', { error });
+            res.render('error', {error});
         }
     }
 
     async getAllTasks(req, res) {
         try {
             const tasks = await taskStore.all();
-            res.render('index', { tasks });
+            res.render('index', {tasks});
         } catch (error) {
-            res.render('error', { error });
+            res.render('error', {error});
         }
     }
 }
