@@ -1,0 +1,10 @@
+<p>Create a Task</p>
+<form action="/tasks" method="post">
+    <label for="taskName">Task Name:</label>
+    <input type="text" id="taskName" name="taskName" required>
+    <input type="submit" value="Create Task">
+</form>
+
+{{#if taskName}}
+    <p>{{taskName}}</p>
+{{/if}}

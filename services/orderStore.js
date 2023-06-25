@@ -1,6 +1,6 @@
-import Datastore from '@seald-io/nedb';
+import Datastore from "nedb";
 
-const db = new Datastore({filename: './data/order.db', autoload: true});
+const db = new Datastore({ filename: "./data/order.db", autoload: true });
 
 class Order {
     constructor(id, task, orderedBy) {
@@ -12,33 +12,42 @@ class Order {
     }
 }
 
-
 class OrderStore {
     constructor() {
-        this.orders = [];
-    }
-
-    add(pizzaName, orderedBy) {
-        let order = new Order(this.orders.length, pizzaName, orderedBy);
-        this.orders.push(order);
-        return order;
-
+        this.db = new Datastore({ filename: "./data/orders.db", autoload: true });
     }
 
     delete(id) {
-        let order = this.get(id);
+        const order = this.get(id);
         if (order) {
             order.state = "DELETED";
+            this.db.update({ _id: order.id }, order);
         }
         return order;
     }
 
     get(id) {
-        return this.orders[id];
+        return new Promise((resolve, reject) => {
+            this.db.findOne({ _id: id }, (err, order) => {
+                if (!err) {
+                    resolve(order);
+                } else {
+                    reject(err);
+                }
+            });
+        });
     }
 
     all() {
-        return this.orders;
+        return new Promise((resolve, reject) => {
+            this.db.find({}, (err, orders) => {
+                if (!err) {
+                    resolve(orders);
+                } else {
+                    reject(err);
+                }
+            });
+        });
     }
 }
 

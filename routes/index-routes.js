@@ -1,11 +1,9 @@
-import express from 'express';
+import express from "express";
+import { indexController } from "../controller/index-controller.js";
 
 const router = express.Router();
-import {indexController} from '../controller/index-controller.js';
 
-router.get("/", indexController.index.bind(indexController));
-router.get("/orders", indexController.createOrder);
-router.post("/orders", indexController.createPizza);
-
+router.get("/", indexController.index);
+router.get("/tasks", indexController.createTask);
 
 export const indexRoutes = router;
