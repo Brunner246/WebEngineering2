@@ -3,29 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>ToDo App</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
+
 <body>
-<header>
-    <h1>ToDo App</h1>
-</header>
 <div class="container">
     <p class="centered">Create a Task</p>
     <form action="/tasks" method="post">
         <label for="taskName">Task Name:</label>
         <input type="text" id="taskName" name="taskName" required>
 
-        <h2>Importance:</h2>
-        <input type="number" id="importance" name="importance" min="0" max="5">
+        <label>Importance:</label>
+        <input type="number" id="importance" name="importance" min="0" max="5" value="0">
 
-        <h2>Due Date:</h2>
+        <label>Due Date:</label>
         <input type="date" id="dueDate" name="dueDate">
 
-        <h2>Finished:</h2>
-        <input type="checkbox" id="finished" name="finished">
+        <div class="finished-container">
+            <label class="finished-label">
+                <span>Finished:</span>
+                <input type="checkbox" id="finished" name="finished">
+            </label>
+        </div>
 
-        <h2>Description:</h2>
-        <textarea id="description" name="description" rows="4"></textarea>
+        <label>Description:</label>
+        <label for="description"></label><textarea id="description" name="description" rows="4"></textarea>
 
         <div class="button-container">
             <button type="submit">Create</button>
@@ -33,32 +34,7 @@
             <button type="submit" formaction="/overview">Overview</button>
         </div>
     </form>
-
-    {{#if tasks.length}}
-        <h2>All Tasks:</h2>
-        <ul>
-            {{#each tasks}}
-                <li>
-                    <div class="task-content">
-                        <span class="task-description">{{this.description}}</span>
-                        <div class="button-group">
-                            <form action="/tasks/{{this.id}}/delete" method="post">
-                                <button type="submit">Delete</button>
-                            </form>
-                            <form action="/tasks/{{this.id}}/edit" method="get">
-                                <button type="submit">Edit</button>
-                            </form>
-                        </div>
-                    </div>
-                </li>
-            {{/each}}
-        </ul>
-    {{else}}
-        <p>No tasks found.</p>
-    {{/if}}
 </div>
-<footer>
-    <p>&copy; 2023 ToDo App. All rights reserved. Alexander Gassmann & Michael Brunner</p>
-</footer>
 </body>
+
 </html>
