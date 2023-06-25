@@ -1,9 +1,15 @@
 import express from 'express';
+import { taskController } from "../controller/task-controller.js";
 
 const router = express.Router();
 
-import {taskController} from "../controller/task-controller.js";
+router.get("/", async (req, res) => {
+    await taskController.getAllTasks(req, res);
+});
 
-router.post("/tasks", taskController.createTask);
+router.post("/", taskController.createTask.bind(taskController));
+router.get("/:id/edit", taskController.editTask.bind(taskController));
+router.post("/:id/delete", taskController.deleteTask.bind(taskController));
+router.post("/:id/update", taskController.updateTask.bind(taskController));
 
 export const taskRoutes = router;

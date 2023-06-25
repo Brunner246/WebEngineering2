@@ -29,6 +29,7 @@ app.use(sessionUserSettings);
 app.use(bodyParser.urlencoded({extended: true})); // default was false
 app.use(bodyParser.json());
 
-app.use("/", indexRoutes);
 app.use("/tasks", taskRoutes);
+app.use("/", indexRoutes);
+
 

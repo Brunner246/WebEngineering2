@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Task Management</title>
+    <meta charset="UTF-8">
+    <title>ToDo App</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-<h1>Willkommen! Zu der besten TeamArbeit auf der Welt!</h1>
-<form action="/tasks" method="get">
-    <input type="submit" value="Create Task">
-</form>
+<header>
+    <h1>ToDo App</h1>
+</header>
+<div class="container">
+    <p class="centered">Create a Task</p>
+    <form action="/tasks" method="post">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" required>
+
+        <h2>Importance:</h2>
+        <input type="number" id="importance" name="importance" min="0" max="5">
+
+        <h2>Due Date:</h2>
+        <input type="date" id="dueDate" name="dueDate">
+
+        <h2>Finished:</h2>
+        <input type="checkbox" id="finished" name="finished">
+
+        <h2>Description:</h2>
+        <textarea id="description" name="description" rows="4"></textarea>
+
+        <div class="button-container">
+            <button type="submit">Create</button>
+            <button type="submit" formaction="/overview">Create & Overview</button>
+            <button type="submit" formaction="/overview">Overview</button>
+        </div>
+    </form>
+
+    {{#if tasks.length}}
+        <h2>All Tasks:</h2>
+        <ul>
+            {{#each tasks}}
+                <li>
+                    <div class="task-content">
+                        <span class="task-description">{{this.description}}</span>
+                        <div class="button-group">
+                            <form action="/tasks/{{this.id}}/delete" method="post">
+                                <button type="submit">Delete</button>
+                            </form>
+                            <form action="/tasks/{{this.id}}/edit" method="get">
+                                <button type="submit">Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No tasks found.</p>
+    {{/if}}
+</div>
+<footer>
+    <p>&copy; 2023 ToDo App. All rights reserved. Alexander Gassmann & Michael Brunner</p>
+</footer>
 </body>
 </html>

@@ -1,0 +1,6 @@
+<h2>Edit Task</h2>
+<form action="/tasks/{{task.id}}/update" method="post">
+    <label for="taskName">Task Name:</label>
+    <input type="text" id="taskName" name="taskName" value="{{task.description}}" required>
+    <button type="submit">Update Task</button>
+</form>

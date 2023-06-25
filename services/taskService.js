@@ -1,38 +1,101 @@
+import Datastore from '@seald-io/nedb';
 class Task {
-    constructor(id, description, assignedTo) {
+    constructor(id, description) {
         this.id = id;
         this.description = description;
-        this.assignedTo = assignedTo;
         this.creationDate = new Date();
         this.completed = false;
+    }
+
+    isCompleted() {
+        return this.completed;
+    }
+
+    setCompleted(completed) {
+        this.completed = completed;
+    }
+
+    getDescription() {
+        return this.description;
+    }
+
+    setDescription(description) {
+        this.description = description;
+    }
+
+    getCreationDate() {
+        return this.creationDate;
     }
 }
 
 class TaskStore {
     constructor() {
-        this.tasks = [];
+        this.db = new Datastore({ filename: 'tasks.db', autoload: true });
     }
 
-    add(description, assignedTo) {
-        const task = new Task(this.tasks.length, description, assignedTo);
-        this.tasks.push(task);
-        return task;
+    add(description) {
+        const task = new Task(undefined, description);
+        return new Promise((resolve, reject) => {
+            this.db.insert(task, (err, newTask) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(newTask);
+                }
+            });
+        });
     }
 
     delete(id) {
-        const task = this.get(id);
-        if (task) {
-            task.completed = true;
-        }
-        return task;
+        return new Promise((resolve, reject) => {
+            this.db.remove({ _id: id }, {}, (err, numRemoved) => {
+                if (err) {
+                    reject(err);
+                } else if (numRemoved === 0) {
+                    resolve(null);
+                } else {
+                    resolve({ _id: id });
+                }
+            });
+        });
     }
 
     get(id) {
-        return this.tasks.find((task) => task.id === id);
+        return new Promise((resolve, reject) => {
+            this.db.findOne({ _id: id }, (err, task) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(task);
+                }
+            });
+        });
+    }
+
+    update(id, description) {
+        return new Promise((resolve, reject) => {
+            this.db.update({ _id: id }, { $set: { description } }, {}, (err, numUpdated) => {
+                if (err) {
+                    reject(err);
+                } else if (numUpdated === 0) {
+                    resolve(null);
+                } else {
+                    resolve({ _id: id, description });
+                }
+            });
+        });
     }
 
     all() {
-        return this.tasks;
+        return new Promise((resolve, reject) => {
+            this.db.find({}, (err, tasks) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(tasks);
+                }
+            });
+        });
     }
 }
 
