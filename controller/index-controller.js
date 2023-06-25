@@ -4,10 +4,9 @@ export class IndexController {
         // res.redirect("/orders");
     };
 
-    createTask(req, res) {
-        res.redirect("/tasks/new");
-    }
-
+    // createTask(req, res) {
+    //     res.redirect("/tasks/new");
+    // }
 }
 
 export const indexController = new IndexController();

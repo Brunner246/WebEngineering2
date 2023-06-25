@@ -1,0 +1,54 @@
+.task {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr auto auto;
+    grid-gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.task-date {
+    grid-column: 1;
+}
+
+.task-title {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.task-description {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.task-importance {
+    grid-column: 3;
+}
+
+.task-edit-button {
+    grid-column: 4;
+}
+
+.task-delete-button {
+    grid-column: 5;
+}
+
+.task-checkbox {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.task-checkbox-label {
+    grid-column: 1;
+}
+
+.task-checkbox-description {
+    grid-column: 2;
+}

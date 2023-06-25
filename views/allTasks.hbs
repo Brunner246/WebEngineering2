@@ -1,0 +1,26 @@
+<link rel="stylesheet" type="text/css" href="/css/tasks.css">
+{{#if tasks.length}}
+    <h2>All Tasks:</h2>
+    <ul>
+        {{#each tasks}}
+            <li>
+                <div class="task">
+                    <span class="task-date">{{this.dueDate}}</span>
+                    <span class="task-title">{{this.title}}</span>
+                    <span class="task-description">{{this.description}}</span>
+                    <span class="task-importance">{{this.importance}}</span>
+                    <label class="task-checkbox-label">Open</label>
+                    <form action="/tasks/{{this.id}}/edit" method="get" class="task-edit-button">
+                        <button type="submit">Edit</button>
+                    </form>
+                    <form action="/tasks/{{this.id}}/delete" method="post" class="task-delete-button">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No tasks found.</p>
+{{/if}}

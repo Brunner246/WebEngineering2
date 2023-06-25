@@ -7,16 +7,16 @@
 
 <body>
 <div class="container">
-    <p class="centered">Create a Task</p>
+    <p class="custom-title">Create a Task</p>
     <form action="/tasks" method="post">
-        <label for="taskName">Task Name:</label>
-        <input type="text" id="taskName" name="taskName" required>
+        <label for="taskTitle">Task Title:</label>
+        <input type="text" id="taskTitle" name="taskTitle" placeholder="Enter ToDo task..."> <!-- required -->
 
         <label>Importance:</label>
         <input type="number" id="importance" name="importance" min="0" max="5" value="0">
 
         <label>Due Date:</label>
-        <input type="date" id="dueDate" name="dueDate">
+        <input type="date" id="dueDate" name="dueDate"> <!-- required -->
 
         <div class="finished-container">
             <label class="finished-label">
@@ -26,12 +26,13 @@
         </div>
 
         <label>Description:</label>
-        <label for="description"></label><textarea id="description" name="description" rows="4"></textarea>
+        <label for="description"></label><textarea id="description" name="description" rows="4"
+                                                   placeholder="Enter task Description..."></textarea>
 
         <div class="button-container">
-            <button type="submit">Create</button>
-            <button type="submit" formaction="/overview">Create & Overview</button>
-            <button type="submit" formaction="/overview">Overview</button>
+            <button class="column1" type="submit">Create</button>
+            <button class="column2" type="submit" formaction="/tasks">Create & Overview</button>
+            <button class="column3" type="submit" formaction="/tasks">Overview</button>
         </div>
     </form>
 </div>

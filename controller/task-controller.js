@@ -2,9 +2,12 @@ import taskStore from '../services/taskService.js';
 
 export class TaskController {
     async createTask(req, res) {
-        const description = req.body.taskName;
+        const title = req.body.taskTitle;
+        const description = req.body.description;
+        const importance = req.body.importance;
+
         try {
-            await taskStore.add(description);
+            await taskStore.add(title, description, new Date(), false, importance); // TODO: dueDate (atm just new Date() as placeholder), status
             res.redirect('/tasks');
         } catch (error) {
             res.render('error', {error});
@@ -67,7 +70,7 @@ export class TaskController {
     async getAllTasks(req, res) {
         try {
             const tasks = await taskStore.all();
-            res.render('index', {tasks});
+            res.render('allTasks', {tasks});
         } catch (error) {
             res.render('error', {error});
         }

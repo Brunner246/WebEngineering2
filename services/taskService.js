@@ -1,9 +1,23 @@
 import Datastore from '@seald-io/nedb';
+
+const TaskImportance = {
+    NONE: 0,
+    LOW: 1,
+    MEDIUM: 2,
+    HIGH: 3,
+    VERY_HIGH: 4,
+    URGENT: 5
+
+}
+
 class Task {
-    constructor(id, description) {
+    constructor(id, title, description, dueDate, importance) {
         this.id = id;
+        this.title = title;
         this.description = description;
         this.creationDate = new Date();
+        this.dueDate = this.formatDueDate(dueDate);
+        this.importance = importance || TaskImportance.NONE
         this.completed = false;
     }
 
@@ -26,6 +40,17 @@ class Task {
     getCreationDate() {
         return this.creationDate;
     }
+
+    formatDueDate(aDueDate) {
+        if (aDueDate === null) {
+            return null;
+        }
+        return `${aDueDate.getDate()}/${aDueDate.getMonth() + 1}/${aDueDate.getFullYear()}`;
+    }
+
+    isOverdue() {
+        return this.dueDate !== null && this.dueDate < new Date();
+    }
 }
 
 class TaskStore {
@@ -33,8 +58,8 @@ class TaskStore {
         this.db = new Datastore({ filename: 'tasks.db', autoload: true });
     }
 
-    add(description) {
-        const task = new Task(undefined, description);
+    add(title, description, dueDate, importance) {
+        const task = new Task(undefined, title, description, dueDate, importance);
         return new Promise((resolve, reject) => {
             this.db.insert(task, (err, newTask) => {
                 if (err) {

@@ -15,6 +15,11 @@ body {
     text-align: center;
 }
 
+.custom-title{
+    text-align: center;
+    font-size: 20px;
+}
+
 form {
     display: grid;
     grid-gap: 10px;
@@ -53,7 +58,22 @@ textarea {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
     margin-top: 10px;
+}
+.column1 {
+    grid-column: 1;
+    grid-row: 0;
+}
+
+.column2 {
+    grid-column: 2;
+    grid-row: 0;
+}
+
+.column3 {
+    grid-column: 3;
+    grid-row: 0;
 }
 
 button {
