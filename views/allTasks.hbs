@@ -4,20 +4,24 @@
     <h3 class="filter-heading">Filter Options:</h3>
     <div class="filter-container">
         <div class="filter-toggle">
-            <input type="checkbox" id="nameFilter" name="nameFilter">
-            <label for="nameFilter">Name</label>
+            <button id="nameFilterButton" class="filter-button" aria-expanded="false">
+                Name <span class="arrow-icon">&#x25BC;</span>
+            </button>
         </div>
         <div class="filter-toggle">
-            <input type="checkbox" id="dueDateFilter" name="dueDateFilter">
-            <label for="dueDateFilter">Due Date</label>
+            <button id="dueDateFilterButton" class="filter-button" aria-expanded="false">
+                Due date <span class="arrow-icon">&#x25BC;</span>
+            </button>
         </div>
         <div class="filter-toggle">
-            <input type="checkbox" id="creationDateFilter" name="creationDateFilter">
-            <label for="creationDateFilter">Creation Date</label>
+            <button id="creationDateFilterButton" class="filter-button" aria-expanded="false">
+                creation Date <span class="arrow-icon">&#x25BC;</span>
+            </button>
         </div>
         <div class="filter-toggle">
-            <input type="checkbox" id="importanceFilter" name="importanceFilter">
-            <label for="importanceFilter">Importance</label>
+            <button id="importanceFilterButton" class="filter-button" aria-expanded="false">
+                Importance <span class="arrow-icon">&#x25BC;</span>
+            </button>
         </div>
     </div>
 
@@ -48,3 +52,15 @@
     {{else}}
         <p>No tasks found.</p>
     {{/if}}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var filterButtons = document.querySelectorAll('.filter-button');
+        filterButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+    });
+</script>

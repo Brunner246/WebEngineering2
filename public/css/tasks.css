@@ -108,3 +108,12 @@
     }
 }
 
+.filter-toggle .filter-button .arrow-icon {
+    display: inline-block;
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+.filter-toggle .filter-button.active .arrow-icon {
+    transform: rotate(180deg);
+}
