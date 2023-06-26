@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
 
 router.get("/tasks", taskController.getAllTasks);
 router.post("/", taskController.createTask);
+router.get('/tasks/sort', taskController.sortTasks);
 router.get("/:id/edit", taskController.editTask.bind(taskController));
 router.post("/:id/delete", taskController.deleteTask.bind(taskController));
 router.post("/:id/update", taskController.updateTask.bind(taskController));

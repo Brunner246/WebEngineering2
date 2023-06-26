@@ -12,4 +12,4 @@ export const sessionUserSettings = (req, res, next) => {
     next();
 };
 
-// TODO : use this middleware for sorting !!
+// TODO use this middleware for sorting !!

@@ -14,18 +14,8 @@ export class TaskController {
         }
     }
 
-    // async deleteTask(req, res) {
-    //     const id = parseInt(req.params.id);
-    //     try {
-    //         const task = await taskStore.delete(id);
-    //         if (task) {
-    //             res.redirect('/tasks');
-    //         } else {
-    //             res.render('taskNotFound');
-    //         }
-    //     } catch (error) {
-    //         res.render('error', { error });
-    //     }
+    // renderTaskDetails(req, res) {
+    //     res.render('newTask', {taskName: req.body.taskName}); // taskName: req.userSettings.orderBy
     // }
 
     deleteTask(req, res) {
@@ -73,6 +63,36 @@ export class TaskController {
             res.render('allTasks', {tasks});
         } catch (error) {
             res.render('error', {error});
+        }
+    }
+
+    async sortTasks(req, res) {
+        const { orderBy, orderDirection } = req.userSettings;
+
+        try {
+            let tasks = await taskStore.all();
+
+            if (orderBy === 'title') {
+                tasks.sort((a, b) => {
+                    if (a.title < b.title) return -1;
+                    if (a.title > b.title) return 1;
+                    return 0;
+                });
+            } else if (orderBy === 'dueDate') {
+                tasks.sort((a, b) => a.dueDate - b.dueDate);
+            } else if (orderBy === 'creationDate') {
+                tasks.sort((a, b) => a.creationDate - b.creationDate);
+            } else if (orderBy === 'importance') {
+                tasks.sort((a, b) => b.importance - a.importance);
+            }
+
+            if (orderDirection === 'desc') {
+                tasks.reverse();
+            }
+
+            res.render('allTasks', { tasks });
+        } catch (error) {
+            res.render('error', { error });
         }
     }
 }

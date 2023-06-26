@@ -4,5 +4,6 @@ export const helpers = {
             return opts.fn(this);
         else
             return opts.inverse(this);
-    }
+    },
 }
+
