@@ -23,6 +23,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.resolve('views'));
 
+// register middlewares
 app.use(express.static(path.resolve('public')));
 app.use(session({secret: 'casduichasidbnuwezrfinasdcvjkadfhsuilfuzihfioda', resave: false, saveUninitialized: true}));
 app.use(sessionUserSettings);
