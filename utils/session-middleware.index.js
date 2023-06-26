@@ -11,3 +11,5 @@ export const sessionUserSettings = (req, res, next) => {
     req.userSettings = req.session.userSettings = userSettings;
     next();
 };
+
+// TODO : use this middleware for sorting !!
