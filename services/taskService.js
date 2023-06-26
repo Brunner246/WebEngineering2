@@ -11,8 +11,7 @@ const TaskImportance = {
 }
 
 class Task {
-    constructor(id, title, description, dueDate, importance) {
-        this.id = id;
+    constructor(title, description, dueDate, importance) {
         this.title = title;
         this.description = description;
         this.creationDate = new Date();
@@ -59,7 +58,7 @@ class TaskStore {
     }
 
     add(title, description, dueDate, importance) {
-        const task = new Task(undefined, title, description, dueDate, importance);
+        const task = new Task(title, description, dueDate, importance);
         return new Promise((resolve, reject) => {
             this.db.insert(task, (err, newTask) => {
                 if (err) {
