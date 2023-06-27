@@ -59,14 +59,14 @@ export class TaskController {
 
     async getAllTasks(req, res) {
         try {
-            const tasks = await taskStore.all();
-            res.render('allTasks', {tasks});
+            res.render('allTasks', {tasks: await taskStore.all()});
         } catch (error) {
             res.render('error', {error});
         }
     }
 
     async sortTasks(req, res) {
+        // TODO: implement sorting by dueDate, creationDate, importance URL params (e.g. /tasks/sort?orderBy=dueDate&orderDirection=desc)
         const { orderBy, orderDirection } = req.userSettings;
 
         try {

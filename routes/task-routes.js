@@ -4,12 +4,8 @@ import {indexController} from "../controller/index-controller.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    await taskController.getAllTasks(req, res);
-});
-
-router.get("/tasks", taskController.getAllTasks);
 router.post("/", taskController.createTask);
+router.get("/", taskController.getAllTasks);
 router.get('/tasks/sort', taskController.sortTasks);
 router.get("/:id/edit", taskController.editTask.bind(taskController));
 router.post("/:id/delete", taskController.deleteTask.bind(taskController));
