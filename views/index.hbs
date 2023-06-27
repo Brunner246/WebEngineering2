@@ -35,29 +35,6 @@
             <button class="column3" type="submit" formaction="/tasks">Overview</button>
         </div>
     </form>
-
-    {{#if tasks.length}}
-        <h2>All Tasks:</h2>
-        <ul>
-            {{#each tasks}}
-                <li>
-                    <div class="task-content">
-                        <span class="task-description">{{this.description}}</span>
-                        <div class="button-group">
-                            <form action="/tasks/{{this.id}}/delete" method="post">
-                                <button type="submit">Delete</button>
-                            </form>
-                            <form action="/tasks/{{this.id}}/edit" method="get">
-                                <button type="submit">Edit</button>
-                            </form>
-                        </div>
-                    </div>
-                </li>
-            {{/each}}
-        </ul>
-    {{else}}
-        <p>No tasks found.</p>
-    {{/if}}
 </div>
 </body>
 
