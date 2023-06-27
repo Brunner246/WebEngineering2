@@ -7,7 +7,7 @@ export class TaskController {
         const importance = req.body.importance;
 
         try {
-            await taskStore.add(title, description, new Date(), false, importance); // TODO: dueDate (atm just new Date() as placeholder), status
+            await taskStore.add(title, description, new Date(), importance); // TODO: dueDate (atm just new Date() as placeholder), status
             res.redirect('/tasks');
         } catch (error) {
             res.render('error', {error});
