@@ -40,10 +40,10 @@
                             <input type="checkbox" id="status" name="status">
                             <label for="status">Open</label>
                         </div>
-                        <form action="/tasks/{{this.id}}/edit" method="get" class="task-edit-button">
+                        <form action="/tasks/{{this._id}}/edit" method="get" class="task-edit-button">
                             <button type="submit">Edit</button>
                         </form>
-                        <form action="/tasks/{{this.id}}/delete" method="post" class="task-delete-button">
+                        <form action="/tasks/{{this._id}}/delete" method="post" class="task-delete-button">
                             <button type="submit">Delete</button>
                         </form>
                     </div>

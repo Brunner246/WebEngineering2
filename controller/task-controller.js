@@ -13,23 +13,28 @@ export class TaskController {
             res.render('error', {error});
         }
     }
-
     // renderTaskDetails(req, res) {
     //     res.render('newTask', {taskName: req.body.taskName}); // taskName: req.userSettings.orderBy
     // }
 
-    deleteTask(req, res) {
+    async deleteTask(req, res) {
         const id = req.params.id;
-        const task = taskStore.delete(id);
-        if (task) {
-            res.redirect('/tasks');
-        } else {
-            res.render('taskNotFound');
+        try {
+            console.log(id);
+            const task = await taskStore.delete(id);
+            if (task) {
+                res.redirect('/tasks');
+            } else {
+                res.render('taskNotFound');
+            }
+        } catch (error) {
+            res.render('error', { error });
         }
     }
 
+
     async editTask(req, res) {
-        const id = parseInt(req.params.id);
+        const id = req.params.id;
         try {
             const task = await taskStore.get(id);
             if (task) {
@@ -43,7 +48,7 @@ export class TaskController {
     }
 
     async updateTask(req, res) {
-        const id = parseInt(req.params.id);
+        const id = req.params.id;
         const description = req.body.taskName;
         try {
             const task = await taskStore.update(id, description);
