@@ -1,26 +1,56 @@
 <link rel="stylesheet" type="text/css" href="/css/tasks.css">
-{{#if tasks.length}}
-    <h2>All Tasks:</h2>
-    <ul>
-        {{#each tasks}}
-            <li>
-                <div class="task">
-                    <span class="task-date">{{this.dueDate}}</span>
-                    <span class="task-title">{{this.title}}</span>
-                    <span class="task-description">{{this.description}}</span>
-                    <span class="task-importance">{{this.importance}}</span>
-                    <label class="task-checkbox-label">Open</label>
-                    <form action="/tasks/{{this.id}}/edit" method="get" class="task-edit-button">
-                        <button type="submit">Edit</button>
-                    </form>
-                    <form action="/tasks/{{this.id}}/delete" method="post" class="task-delete-button">
-                        <button type="submit">Delete</button>
-                    </form>
-                </div>
 
-            </li>
-        {{/each}}
-    </ul>
-{{else}}
-    <p>No tasks found.</p>
-{{/if}}
+<div class="container">
+    <h3 class="filter-heading">Filter Options:</h3>
+    <div class="filter-container">
+        <div class="filter-toggle">
+            <button id="nameFilterButton"
+                    class="filter-button {{#if_eq filterNameAscending false}}rotate-arrow{{/if_eq}}"
+                    aria-expanded="false">
+                Name <span class="arrow-icon">&#x25BC;</span>
+            </button>
+
+            <button id="dueDateFilterButton" class="filter-button" aria-expanded="false">
+                Due date <span class="arrow-icon">&#x25BC;</span>
+            </button>
+
+            <button id="creationDateFilterButton" class="filter-button" aria-expanded="false">
+                creation Date <span class="arrow-icon">&#x25BC;</span>
+            </button>
+
+            <button id="importanceFilterButton" class="filter-button" aria-expanded="false">
+                Importance <span class="arrow-icon">&#x25BC;</span>
+            </button>
+        </div>
+    </div>
+    {{#if tasks.length}}
+        <h2>All Tasks:</h2>
+        <button id="newTask" aria-expanded="false">
+            &#x2795; New Task
+        </button>
+        <ul>
+            {{#each tasks}}
+                <li>
+                    <div class="task">
+                        <span class="task-date">{{this.dueDate}}</span>
+                        <span class="task-title">{{this.title}}</span>
+                        <span class="task-description">{{this.description}}</span>
+                        <span class="task-importance">{{this.importance}}</span>
+                        <div class="task-checkbox-label">
+                            <input type="checkbox" id="status" name="status">
+                            <label for="status">Open</label>
+                        </div>
+                        <form action="/tasks/{{this._id}}/edit" method="get" class="task-edit-button">
+                            <button type="submit">Edit</button>
+                        </form>
+                        <form action="/tasks/{{this._id}}/delete" method="post" class="task-delete-button">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No tasks found.</p>
+    {{/if}}
+</div>
