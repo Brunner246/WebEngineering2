@@ -4,14 +4,11 @@ import {indexController} from "../controller/index-controller.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    await taskController.getAllTasks(req, res);
-});
-
-router.get("/tasks", taskController.getAllTasks);
 router.post("/", taskController.createTask);
-router.get("/:id/edit", taskController.editTask.bind(taskController));
-router.post("/:id/delete", taskController.deleteTask.bind(taskController));
-router.post("/:id/update", taskController.updateTask.bind(taskController));
+router.get("/", taskController.getAllTasks);
+router.get('/tasks/sort', taskController.sortTasks);
+router.get("/:id/edit", taskController.editTask);
+router.post("/:id/delete", taskController.deleteTask);
+router.post("/:id/update", taskController.updateTask);
 
 export const taskRoutes = router;
