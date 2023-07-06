@@ -46,10 +46,11 @@
                         <span class="task-title">{{this.title}}</span>
                         <span class="task-description">{{this.description}}</span>
                         <span class="task-importance">{{this.importance}}</span>
-                        <div class="task-checkbox-label">
-                            <input type="checkbox" id="status" name="status">
+                        <form action="/tasks/{{this._id}}/state" method="post" class="task-checkbox-label">
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="checkbox" id="status" name="completed">
                             <label for="status">Open</label>
-                        </div>
+                        </form>
                         <form action="/tasks/{{this._id}}/edit" method="get" class="task-edit-button">
                             <button type="submit">Edit</button>
                         </form>

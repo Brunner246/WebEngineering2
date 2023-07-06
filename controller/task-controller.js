@@ -59,6 +59,21 @@ export class TaskController {
         }
     }
 
+    async setState(req, res) {
+        const id = req.params.id;
+        const completed = req.body.completed === "on";
+        try {
+            const task = await taskStore.updateState(id, completed);
+            if (task) {
+                res.redirect('/tasks');
+            } else {
+                res.render('taskNotFound');
+            }
+        } catch (error) {
+            res.render('error', {error});
+        }
+    }
+
     async getAllTasks(req, res) {
         try {
             res.render('allTasks', {tasks: await taskStore.all()});

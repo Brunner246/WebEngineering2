@@ -7,6 +7,7 @@ const router = express.Router();
 router.post("/", taskController.createTask);
 router.get("/", taskController.getAllTasks);
 router.get('/tasks/sort', taskController.sortTasks);
+router.post('/tasks/:id/state', taskController.setState);
 router.get("/:id/edit", taskController.editTask);
 router.post("/:id/delete", taskController.deleteTask);
 router.post("/:id/update", taskController.updateTask);
