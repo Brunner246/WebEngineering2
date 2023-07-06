@@ -121,6 +121,18 @@ class TaskStore {
             });
         });
     }
+
+    completed() {
+        return new Promise((resolve, reject) => {
+            this.db.find({ state: "OK"}, (err, tasks) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(tasks);
+                }
+            });
+        });
+    }
 }
 
 const taskStore = new TaskStore();

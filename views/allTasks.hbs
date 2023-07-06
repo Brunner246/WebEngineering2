@@ -21,13 +21,23 @@
             <button id="importanceFilterButton" class="filter-button" aria-expanded="false">
                 Importance <span class="arrow-icon">&#x25BC;</span>
             </button>
+
+            <form action="/tasks/completed" method="get">
+            <button id="filterButtonCompleted" class="filter-button" aria-expanded="false">
+                            Completed <span class="arrow-icon">&#x25BC;</span>
+                        </button>
+                        </form>
+
         </div>
     </div>
     {{#if tasks.length}}
         <h2>All Tasks:</h2>
-        <button id="newTask" aria-expanded="false">
-            &#x2795; New Task
-        </button>
+        <form action="/" method="get">
+            <button id="newTask" aria-expanded="false">
+                     &#x2795; New Task
+                 </button>
+        </form>
+
         <ul>
             {{#each tasks}}
                 <li>

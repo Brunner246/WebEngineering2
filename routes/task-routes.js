@@ -10,5 +10,6 @@ router.get('/tasks/sort', taskController.sortTasks);
 router.get("/:id/edit", taskController.editTask);
 router.post("/:id/delete", taskController.deleteTask);
 router.post("/:id/update", taskController.updateTask);
+router.get("/completed", taskController.getCompletedTasks);
 
 export const taskRoutes = router;
