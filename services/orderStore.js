@@ -2,16 +2,6 @@ import Datastore from '@seald-io/nedb';
 
 const db = new Datastore({ filename: "./data/order.db", autoload: true });
 
-class Order {
-    constructor(id, task, orderedBy) {
-        this.id = id;
-        this.orderedBy = orderedBy;
-        this.task = task;
-        this.orderDate = new Date();
-        this.state = "OK";
-    }
-}
-
 class OrderStore {
     constructor() {
         this.db = new Datastore({ filename: "./data/orders.db", autoload: true });

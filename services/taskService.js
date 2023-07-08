@@ -110,9 +110,33 @@ class TaskStore {
         });
     }
 
+    updateState(id, completed) {
+        return new Promise((resolve, reject) => {
+            this.db.update({ _id: id }, { $set: { completed } }, {}, (err, numUpdated) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve({ _id: id, completed });
+                }
+            });
+        });
+    }
+
     all() {
         return new Promise((resolve, reject) => {
             this.db.find({}, (err, tasks) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(tasks);
+                }
+            });
+        });
+    }
+
+    completed() {
+        return new Promise((resolve, reject) => {
+            this.db.find({ state: "false"}, (err, tasks) => {
                 if (err) {
                     reject(err);
                 } else {

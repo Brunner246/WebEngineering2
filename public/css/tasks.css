@@ -1,3 +1,13 @@
+.container-tasks {
+    padding: 20px;
+    background-color: #f5f5f5;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
 .task {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr auto auto;
@@ -83,6 +93,7 @@
         margin-bottom: 10px;
 
     }
+
     .filter-toggle button {
         margin-bottom: 5px;
         width: 100%;
@@ -92,32 +103,41 @@
 /* Desktop Styles */
 @media (min-width: 601px) {
     .filter-header {
-        flex: 0 0 auto;
+        flex: 1 1 auto;
     }
 
     .filter-toggle {
+        display: flex;
         flex-direction: row;
         align-items: center;
+        margin-bottom: 10px;
     }
 
-    .task-edit-button,
-    .task-delete-button {
-        margin-top: 0;
-        margin-left: 10px;
+    .filter-toggle button {
+        margin-bottom: 0;
+        margin-right: 10px;
+        width: auto;
     }
 }
+
+.task-edit-button,
+.task-delete-button {
+    margin-top: 0;
+    margin-left: 10px;
+}
+
 
 ul {
     list-style-type: none;
 }
 
+.new-task-button {
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    align-self: flex-start;
+    display: inline-block;
+    min-width: fit-content;
+}
 
-/*.filter-toggle .filter-button .arrow-icon {*/
-/*    display: inline-block;*/
-/*    margin-left: 5px;*/
-/*    transition: transform 0.3s;*/
-/*}*/
-
-/*.filter-toggle .filter-button.active .arrow-icon {*/
-/*    transform: rotate(180deg);*/
-/*}*/
