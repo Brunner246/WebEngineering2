@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="/css/tasks.css">
 
-<div class="container">
+<div class="container-tasks">
     <h3 class="filter-heading">Filter Options:</h3>
     <div class="filter-container">
         <div class="filter-toggle">
@@ -23,19 +23,19 @@
             </button>
 
             <form action="/tasks/completed" method="get">
-            <button id="filterButtonCompleted" class="filter-button" aria-expanded="false">
-                            Completed <span class="arrow-icon">&#x25BC;</span>
-                        </button>
-                        </form>
+                <button id="filterButtonCompleted" class="filter-button" aria-expanded="false">
+                    Completed <span class="arrow-icon">&#x25BC;</span>
+                </button>
+            </form>
 
         </div>
     </div>
     {{#if tasks.length}}
-        <h2>All Tasks:</h2>
         <form action="/" method="get">
-            <button id="newTask" aria-expanded="false">
-                     &#x2795; New Task
-                 </button>
+            <button id="newTask" class="new-task-button" aria-expanded="false">
+                &#x2795; New Task
+            </button>
+            <h2>All Tasks:</h2>
         </form>
 
         <ul>
