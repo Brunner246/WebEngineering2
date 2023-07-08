@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="/css/tasks.css">
 
-<div class="container">
+<div class="container-tasks">
     <h3 class="filter-heading">Filter Options:</h3>
     <div class="filter-container">
         <div class="filter-toggle">
@@ -21,13 +21,23 @@
             <button id="importanceFilterButton" class="filter-button" aria-expanded="false">
                 Importance <span class="arrow-icon">&#x25BC;</span>
             </button>
+
+            <form action="/tasks/completed" method="get">
+                <button id="filterButtonCompleted" class="filter-button" aria-expanded="false">
+                    Completed <span class="arrow-icon">&#x25BC;</span>
+                </button>
+            </form>
+
         </div>
     </div>
     {{#if tasks.length}}
-        <h2>All Tasks:</h2>
-        <button id="newTask" aria-expanded="false">
-            &#x2795; New Task
-        </button>
+        <form action="/" method="get">
+            <button id="newTask" class="new-task-button" aria-expanded="false">
+                &#x2795; New Task
+            </button>
+            <h2>All Tasks:</h2>
+        </form>
+
         <ul>
             {{#each tasks}}
                 <li>
@@ -36,10 +46,11 @@
                         <span class="task-title">{{this.title}}</span>
                         <span class="task-description">{{this.description}}</span>
                         <span class="task-importance">{{this.importance}}</span>
-                        <div class="task-checkbox-label">
-                            <input type="checkbox" id="status" name="status">
+                        <form action="/tasks/{{this._id}}/state" method="post" class="task-checkbox-label">
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="checkbox" id="status" name="completed">
                             <label for="status">Open</label>
-                        </div>
+                        </form>
                         <form action="/tasks/{{this._id}}/edit" method="get" class="task-edit-button">
                             <button type="submit">Edit</button>
                         </form>
