@@ -2,12 +2,9 @@ import taskStore from '../services/taskService.js';
 
 export class TaskController {
     async createTask(req, res) {
-        const title = req.body.taskTitle;
-        const description = req.body.description;
-        const importance = req.body.importance;
-
+        const {title, description, dueDate, importance} = req.body;
         try {
-            await taskStore.add(title, description, new Date(), importance); // TODO: dueDate (atm just new Date() as placeholder), status
+            await taskStore.add(title, description, dueDate, importance);
             res.redirect('/tasks');
         } catch (error) {
             res.render('error', {error});
@@ -25,7 +22,7 @@ export class TaskController {
                 res.render('taskNotFound');
             }
         } catch (error) {
-            res.render('error', { error });
+            res.render('error', {error});
         }
     }
 
@@ -93,26 +90,19 @@ export class TaskController {
     async sortTasks(req, res) {
         // TODO: implement sorting by dueDate, creationDate, importance URL params (e.g. /tasks/sort?orderBy=dueDate&orderDirection=desc)
         const { orderBy, orderDirection } = req.userSettings;
+        let sortFunction;
+
+        if (orderBy === "importance") {
+            sortFunction = (a, b) => a.importance - b.importance;
+        } else if (orderBy === "dueDate") {
+            sortFunction = (a, b) => new Date(a.dueDate) - new Date(b.dueDate);
+        }
 
         try {
             let tasks = await taskStore.all();
 
-            if (orderBy === 'title') {
-                tasks.sort((a, b) => {
-                    if (a.title < b.title) return -1;
-                    if (a.title > b.title) return 1;
-                    return 0;
-                });
-            } else if (orderBy === 'dueDate') {
-                tasks.sort((a, b) => a.dueDate - b.dueDate);
-            } else if (orderBy === 'creationDate') {
-                tasks.sort((a, b) => a.creationDate - b.creationDate);
-            } else if (orderBy === 'importance') {
-                tasks.sort((a, b) => b.importance - a.importance);
-            }
-
-            if (orderDirection === 'desc') {
-                tasks.reverse();
+            if (sortFunction) {
+                tasks.sort(orderDirection === "asc" ? sortFunction : (a, b) => sortFunction(b, a));
             }
 
             res.render('allTasks', { tasks });

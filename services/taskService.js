@@ -15,7 +15,7 @@ class Task {
         this.title = title;
         this.description = description;
         this.creationDate = new Date();
-        this.dueDate = this.formatDueDate(dueDate);
+        this.dueDate = dueDate; // TODO this.formatDueDate(dueDate);
         this.importance = importance || TaskImportance.NONE
         this.completed = false;
     }
