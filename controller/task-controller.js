@@ -6,10 +6,16 @@ export class TaskController {
         const {title, description, dueDate, importance} = req.body;
         try {
             await taskStore.add(title, description, dueDate, importance);
-            res.redirect('/tasks');
+            res.redirect('/render');
         } catch (error) {
             res.render('error', {error});
         }
+    }
+
+    async renderTask(req, res) {
+        const tasks = await taskStore.all();
+        const sortDirection = req.userSettings.orderDirection;
+        res.render('allTasks', { tasks, sortDirection });
     }
 
     async deleteTask(req, res) {

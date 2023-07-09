@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 <head>
     <meta charset="UTF-8">
     <title>ToDo App</title>
@@ -10,13 +8,13 @@
     <p class="custom-title">Create a Task</p>
     <form action="/tasks" method="post">
         <label for="taskTitle">Task Title:</label>
-        <input type="text" id="taskTitle" name="taskTitle" placeholder="Enter Title..."> <!-- required -->
+        <input type="text" id="taskTitle" name="taskTitle" placeholder="Enter Title...">
 
         <label>Importance:</label>
         <input type="number" id="importance" name="importance" min="0" max="5" value="0">
 
         <label>Due Date:</label>
-        <input type="date" id="dueDate" name="dueDate"> <!-- required -->
+        <input type="date" id="dueDate" name="dueDate">
 
         <div class="finished-container">
             <label class="finished-label">
@@ -26,16 +24,16 @@
         </div>
 
         <label>Description:</label>
-        <label for="description"></label><textarea id="description" name="description" rows="4"
-                                                   placeholder="Enter task Description..."></textarea>
+        <label for="description"></label>
+        <textarea id="description" name="description" rows="4" placeholder="Enter task Description..."></textarea>
 
         <div class="button-container">
-            <button class="column1" type="submit">Create</button>
-            <button class="column2" type="submit" formaction="/tasks">Create & Overview</button>
-            <button class="column3" type="submit" formaction="/tasks">Overview</button>
+            <button class="column1" type="submit" formaction="/tasks/create">Create</button>
+            <button class="column2" type="submit" formaction="/tasks/create-overview">Create &amp; Overview</button>
+            <button class="column3" type="submit" formaction="/tasks/render">Overview</button>
         </div>
     </form>
+
 </div>
 </body>
 
-</html>
