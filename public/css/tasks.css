@@ -141,18 +141,58 @@ ul {
     min-width: fit-content;
 }
 
-.filter-button span {
+.sort-button {
+    display: flex;
+    align-items: center;
+}
+
+.sort-button .arrow-icon {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
     margin-left: 5px;
 }
 
-.filter-button .arrow-icon-up::after {
+.sort-button .arrow-icon-up::after {
     content: "▲";
-    color:  black;
+    color: black;
 }
 
-.filter-button .arrow-icon-down::after {
+.sort-button .arrow-icon-down::after {
     content: "▼";
-    color: white;
+    color: black;
 }
+
+
+/*.sort-button-due-date .arrow-icon-up::after {*/
+/*    content: "▲";*/
+/*    color: black;*/
+/*}*/
+
+/*.sort-button-due-date .arrow-icon-down::after {*/
+/*    content: "▼";*/
+/*    color: black;*/
+/*}*/
+
+/*.sort-button-creation-date .arrow-icon-up::after {*/
+/*    content: "▲";*/
+/*    color: black;*/
+/*}*/
+
+/*.sort-button-creation-date .arrow-icon-down::after {*/
+/*    content: "▼";*/
+/*    color: black;*/
+/*}*/
+
+
+/*.sort-button .arrow-icon-up::after {*/
+/*    content: "▲";*/
+/*    color:  black;*/
+/*}*/
+
+/*.sort-button .arrow-icon-down::after {*/
+/*    content: "▼";*/
+/*    color: white;*/
+/*}*/
 
 

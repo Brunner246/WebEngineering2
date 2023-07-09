@@ -54,8 +54,7 @@ class Task {
 
 class TaskStore {
     constructor() {
-        this.db = new Datastore({ filename: 'tasks.db', autoload: true });
-        this.sortDirection = 1;
+        this.db = new Datastore({filename: 'tasks.db', autoload: true});
     }
 
     add(title, description, dueDate, importance) {
@@ -73,13 +72,13 @@ class TaskStore {
 
     delete(id) {
         return new Promise((resolve, reject) => {
-            this.db.remove({ _id: id }, {}, (err, numRemoved) => {
+            this.db.remove({_id: id}, {}, (err, numRemoved) => {
                 if (err) {
                     reject(err);
                 } else if (numRemoved === 0) {
                     resolve(null);
                 } else {
-                    resolve({ _id: id });
+                    resolve({_id: id});
                 }
             });
         });
@@ -87,7 +86,7 @@ class TaskStore {
 
     get(id) {
         return new Promise((resolve, reject) => {
-            this.db.findOne({ _id: id }, (err, task) => {
+            this.db.findOne({_id: id}, (err, task) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -99,13 +98,13 @@ class TaskStore {
 
     update(id, description) {
         return new Promise((resolve, reject) => {
-            this.db.update({ _id: id }, { $set: { description } }, {}, (err, numUpdated) => {
+            this.db.update({_id: id}, {$set: {description}}, {}, (err, numUpdated) => {
                 if (err) {
                     reject(err);
                 } else if (numUpdated === 0) {
                     resolve(null);
                 } else {
-                    resolve({ _id: id, description });
+                    resolve({_id: id, description});
                 }
             });
         });
@@ -113,11 +112,11 @@ class TaskStore {
 
     updateState(id, completed) {
         return new Promise((resolve, reject) => {
-            this.db.update({ _id: id }, { $set: { completed } }, {}, (err, numUpdated) => {
+            this.db.update({_id: id}, {$set: {completed}}, {}, (err, numUpdated) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve({ _id: id, completed });
+                    resolve({_id: id, completed});
                 }
             });
         });
@@ -135,18 +134,10 @@ class TaskStore {
         });
     }
 
-    invertSortDirection() {
-        const sortDirection = this.sortDirection;
-        this.sortDirection = sortDirection * -1;
-    }
-
-    getSortDirection() {
-        return this.sortDirection;
-    }
 
     completed() {
         return new Promise((resolve, reject) => {
-            this.db.find({ state: "false"}, (err, tasks) => {
+            this.db.find({state: "false"}, (err, tasks) => {
                 if (err) {
                     reject(err);
                 } else {

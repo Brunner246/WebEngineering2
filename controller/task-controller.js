@@ -72,7 +72,7 @@ export class TaskController {
 
     async getAllTasks(req, res) {
         try {
-            res.render('allTasks', {tasks: await taskStore.all(), sortDirection: await taskStore.getSortDirection()});
+            res.render('allTasks', {tasks: await taskStore.all(), sortDirection: await req.userSettings});
         } catch (error) {
             res.render('error', {error});
         }
@@ -80,7 +80,10 @@ export class TaskController {
 
     async getCompletedTasks(req, res) {
         try {
-            res.render('allTasks', {tasks: await taskStore.completed(), sortDirection: await taskStore.getSortDirection()});
+            res.render('allTasks', {
+                tasks: await taskStore.completed(),
+                sortDirection: await req.userSettings
+            });
         } catch (error) {
             res.render('error', {error});
         }
@@ -88,7 +91,7 @@ export class TaskController {
 
     async sortTasks(req, res) {
         // TODO: implement sorting by dueDate, creationDate, importance URL params (e.g. /tasks/sort?orderBy=dueDate&orderDirection=desc)
-        const { orderBy, orderDirection } = req.userSettings;
+        const {orderBy, orderDirection} = req.userSettings;
         let sortFunction;
 
         if (orderBy === "importance") {
@@ -103,11 +106,13 @@ export class TaskController {
             if (sortFunction) {
                 tasks.sort(orderDirection === "-1" ? sortFunction : (a, b) => sortFunction(b, a));
             }
-            console.log("Orderdirection : " + taskStore.getSortDirection())
-            res.render('allTasks', { tasks: tasks, sortDirection: await taskStore.getSortDirection() });
-            taskStore.invertSortDirection();
+            console.log("Title : " + req.userSettings.orderBy); // TODO: remove
+            console.log("Orderdirection : " + req.userSettings.orderDirection); // TODO: remove
+            res.render('allTasks', {tasks: tasks, sortDirection: req.userSettings});
+            req.userSettings.orderDirection = req.userSettings.orderDirection === "-1" ? "1" : "-1";
+
         } catch (error) {
-            res.render('error', { error });
+            res.render('error', {error});
         }
     }
 }

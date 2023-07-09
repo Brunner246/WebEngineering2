@@ -4,41 +4,37 @@
     <h3 class="filter-heading">Filter Options:</h3>
     <div class="filter-container">
         <div class="filter-toggle">
-
-
             <form action="/tasks/sort" method="get">
                 <input type="hidden" name="orderBy" value="dueDate">
-                <input type="hidden" name="orderDirection" value=-1>
-                <!--       store sorting state somewhere-->
-                <button id="dueDateFilterButton" class="filter-button" aria-expanded="false">
-                    Due date <span class="arrow-icon">&#x25BC;</span>
+                <input type="hidden" name="orderDirection" value="{{sortDirection.orderDirection}}">
+                <button id="sortButtonDueDate" class="sort-button" aria-expanded="false">
+                    Due Date
+                    <span class="{{#if_eq sortDirection.orderBy 'dueDate'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
                 </button>
             </form>
-
-            <button id="creationDateFilterButton" class="filter-button" aria-expanded="false">
-                creation Date <span class="arrow-icon">&#x25BC;</span>
-            </button>
-
+            <form action="/tasks/sort" method="get">
+                <input type="hidden" name="orderBy" value="creationDate">
+                <input type="hidden" name="orderDirection" value="{{sortDirection.orderDirection}}">
+                <button id="sortButtonCreationDate" class="sort-button" aria-expanded="false">
+                    Creation Date
+                    <span class="{{#if_eq sortDirection.orderBy 'creationDate'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
+                </button>
+            </form>
             <form action="/tasks/sort" method="get">
                 <input type="hidden" name="orderBy" value="importance">
-                <input type="hidden" name="orderDirection" value="{{sortDirection}}">
-                <button id="filterButtonImportant" class="filter-button" aria-expanded="false">
+                <input type="hidden" name="orderDirection" value="{{sortDirection.sortDirection}}">
+                <button id="sortButtonImportant" class="sort-button" aria-expanded="false">
                     Importance
-                    {{#if_eq sortDirection -1}}
-                        <span class="arrow-icon-up"> </span>
-                    {{else}}
-                        <span class="arrow-icon-down"> </span>
-                    {{/if_eq}}
+                    <span class="{{#if_eq sortDirection.orderBy 'importance'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
                 </button>
             </form>
-
-
-            <form action="/tasks/completed" method="get">
-                <button id="filterButtonCompleted" class="filter-button" aria-expanded="false">
-                    Completed <span class="arrow-icon">&#x25BC;</span>
+            <form action="/tasks/sort" method="get">
+                <input type="hidden" name="orderBy" value="completed">
+                <input type="hidden" name="orderDirection" value="{{sortDirection.sortDirection}}">
+                <button id="sortButtonCompleted" class="sort-button" aria-expanded="false">
+                    Completed
                 </button>
             </form>
-
         </div>
     </div>
     {{#if tasks.length}}
