@@ -6,7 +6,7 @@ export class TaskController {
         const {title, description, dueDate, importance} = req.body;
         try {
             await taskStore.add(title, description, dueDate, importance);
-            res.redirect('/render');
+            res.redirect("/");
         } catch (error) {
             res.render('error', {error});
         }
@@ -15,8 +15,22 @@ export class TaskController {
     async renderTask(req, res) {
         const tasks = await taskStore.all();
         const sortDirection = req.userSettings.orderDirection;
-        res.render('allTasks', { tasks, sortDirection });
+        res.render('allTasks', {tasks, sortDirection});
     }
+
+    async createAndRenderTask(req, res) {
+        try {
+            // TODO: get rid off code repetition
+            const { title, description, dueDate, importance } = req.body;
+            await taskStore.add(title, description, dueDate, importance);
+            const tasks = await taskStore.all();
+            const sortDirection = req.userSettings.orderDirection;
+            res.render('allTasks', { tasks, sortDirection });
+        } catch (error) {
+            res.render('error', { error });
+        }
+    }
+
 
     async deleteTask(req, res) {
         const id = req.params.id;
