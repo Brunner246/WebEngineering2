@@ -141,27 +141,18 @@ ul {
     min-width: fit-content;
 }
 
-.filter-button {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border: none;
-    background-color: transparent;
-    color: #333;
-    font-weight: bold;
-    cursor: pointer;
-}
-
 .filter-button span {
     margin-left: 5px;
 }
 
 .filter-button .arrow-icon-up::after {
     content: "▲";
+    color:  black;
 }
 
 .filter-button .arrow-icon-down::after {
     content: "▼";
+    color: white;
 }
 
 

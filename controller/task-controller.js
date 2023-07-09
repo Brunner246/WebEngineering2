@@ -80,7 +80,7 @@ export class TaskController {
 
     async getCompletedTasks(req, res) {
         try {
-            res.render('allTasks', {tasks: await taskStore.completed()});
+            res.render('allTasks', {tasks: await taskStore.completed(), sortDirection: await taskStore.getSortDirection()});
         } catch (error) {
             res.render('error', {error});
         }
@@ -104,7 +104,7 @@ export class TaskController {
                 tasks.sort(orderDirection === "-1" ? sortFunction : (a, b) => sortFunction(b, a));
             }
             console.log("Orderdirection : " + taskStore.getSortDirection())
-            res.render('allTasks', { tasks: tasks, sortDirection: taskStore.getSortDirection() });
+            res.render('allTasks', { tasks: tasks, sortDirection: await taskStore.getSortDirection() });
             taskStore.invertSortDirection();
         } catch (error) {
             res.render('error', { error });

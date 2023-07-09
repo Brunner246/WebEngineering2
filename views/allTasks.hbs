@@ -4,11 +4,7 @@
     <h3 class="filter-heading">Filter Options:</h3>
     <div class="filter-container">
         <div class="filter-toggle">
-            <button id="nameFilterButton"
-                    class="filter-button {{#if_eq filterNameAscending false}}rotate-arrow{{/if_eq}}"
-                    aria-expanded="false">
-                Name <span class="arrow-icon">&#x25BC;</span>
-            </button>
+
 
             <form action="/tasks/sort" method="get">
                 <input type="hidden" name="orderBy" value="dueDate">
@@ -27,7 +23,12 @@
                 <input type="hidden" name="orderBy" value="importance">
                 <input type="hidden" name="orderDirection" value="{{sortDirection}}">
                 <button id="filterButtonImportant" class="filter-button" aria-expanded="false">
-                    Importance  <span class="{{#if_eq sortDirection 'importance'}}arrow-icon-down{{/if_eq}}{{#if_eq sortDirection '-1'}}arrow-icon-up{{/if_eq}}{{#if_eq sortDirection '1'}}arrow-icon-down{{/if_eq}}"></span>
+                    Importance
+                    {{#if_eq sortDirection -1}}
+                        <span class="arrow-icon-up"> </span>
+                    {{else}}
+                        <span class="arrow-icon-down"> </span>
+                    {{/if_eq}}
                 </button>
             </form>
 
