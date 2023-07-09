@@ -22,6 +22,8 @@ describe('GET /', () => {
         response.should.have.status(200);
 
         const dom = new jsdom.JSDOM(response.text);
-        expect(dom.window.document.body.innerHTML).contain("Hello World")
+        const bodyContent = dom.window.document.body.innerHTML;
+        expect(bodyContent).contain('<h1>ToDo App</h1>');
+        expect(bodyContent).contain('Create a Task');
     });
 });
