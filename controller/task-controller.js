@@ -1,6 +1,7 @@
 import taskStore from '../services/taskService.js';
 
 export class TaskController {
+
     async createTask(req, res) {
         const {title, description, dueDate, importance} = req.body;
         try {
@@ -14,7 +15,6 @@ export class TaskController {
     async deleteTask(req, res) {
         const id = req.params.id;
         try {
-            console.log(id);
             const task = await taskStore.delete(id);
             if (task) {
                 res.redirect('/tasks');
@@ -42,8 +42,7 @@ export class TaskController {
     }
 
     async updateTask(req, res) {
-        const id = req.params.id;
-        const description = req.body.taskName;
+        const {id, description} = req.body;
         try {
             const task = await taskStore.update(id, description);
             if (task) {
@@ -73,7 +72,7 @@ export class TaskController {
 
     async getAllTasks(req, res) {
         try {
-            res.render('allTasks', {tasks: await taskStore.all()});
+            res.render('allTasks', {tasks: await taskStore.all(), sortDirection: await taskStore.getSortDirection()});
         } catch (error) {
             res.render('error', {error});
         }
@@ -102,10 +101,11 @@ export class TaskController {
             let tasks = await taskStore.all();
 
             if (sortFunction) {
-                tasks.sort(orderDirection === "asc" ? sortFunction : (a, b) => sortFunction(b, a));
+                tasks.sort(orderDirection === "-1" ? sortFunction : (a, b) => sortFunction(b, a));
             }
-
-            res.render('allTasks', { tasks });
+            console.log("Orderdirection : " + taskStore.getSortDirection())
+            res.render('allTasks', { tasks: tasks, sortDirection: taskStore.getSortDirection() });
+            taskStore.invertSortDirection();
         } catch (error) {
             res.render('error', { error });
         }

@@ -12,7 +12,8 @@
 
             <form action="/tasks/sort" method="get">
                 <input type="hidden" name="orderBy" value="dueDate">
-                <input type="hidden" name="orderDirection" value="desc"> <!--       store sorting state somewhere-->
+                <input type="hidden" name="orderDirection" value=-1>
+                <!--       store sorting state somewhere-->
                 <button id="dueDateFilterButton" class="filter-button" aria-expanded="false">
                     Due date <span class="arrow-icon">&#x25BC;</span>
                 </button>
@@ -22,14 +23,14 @@
                 creation Date <span class="arrow-icon">&#x25BC;</span>
             </button>
 
-
             <form action="/tasks/sort" method="get">
                 <input type="hidden" name="orderBy" value="importance">
-                <input type="hidden" name="orderDirection" value="desc">
+                <input type="hidden" name="orderDirection" value="{{sortDirection}}">
                 <button id="filterButtonImportant" class="filter-button" aria-expanded="false">
-                    Important <span class="arrow-icon">&#x25BC;</span>
+                    Importance  <span class="{{#if_eq sortDirection 'importance'}}arrow-icon-down{{/if_eq}}{{#if_eq sortDirection '-1'}}arrow-icon-up{{/if_eq}}{{#if_eq sortDirection '1'}}arrow-icon-down{{/if_eq}}"></span>
                 </button>
             </form>
+
 
             <form action="/tasks/completed" method="get">
                 <button id="filterButtonCompleted" class="filter-button" aria-expanded="false">

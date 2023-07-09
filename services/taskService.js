@@ -55,6 +55,7 @@ class Task {
 class TaskStore {
     constructor() {
         this.db = new Datastore({ filename: 'tasks.db', autoload: true });
+        this.sortDirection = 1;
     }
 
     add(title, description, dueDate, importance) {
@@ -132,6 +133,15 @@ class TaskStore {
                 }
             });
         });
+    }
+
+    invertSortDirection() {
+        const sortDirection = this.sortDirection;
+        this.sortDirection = sortDirection * -1;
+    }
+
+    getSortDirection() {
+        return this.sortDirection;
     }
 
     completed() {
