@@ -27,14 +27,11 @@ class Task {
         return `${aDueDate.getDate()}/${aDueDate.getMonth() + 1}/${aDueDate.getFullYear()}`;
     }
 
-    isOverdue() {
-        return this.dueDate !== null && this.dueDate < new Date();
-    }
 }
 
 class TaskStore {
     constructor() {
-        this.db = new Datastore({filename: 'tasks.db', autoload: true});
+        this.db = new Datastore({filename: './data/tasks.db', autoload: true});
     }
 
     add(title, description, dueDate, importance) {
@@ -44,7 +41,7 @@ class TaskStore {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(newTask);
+                    resolve(newTask._id);
                 }
             });
         });
@@ -85,18 +82,6 @@ class TaskStore {
                     resolve(null);
                 } else {
                     resolve({_id: id, description});
-                }
-            });
-        });
-    }
-
-    updateState(id, completed) {
-        return new Promise((resolve, reject) => {
-            this.db.update({_id: id}, {$set: {completed}}, {}, (err, numUpdated) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({_id: id, completed});
                 }
             });
         });
