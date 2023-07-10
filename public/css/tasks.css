@@ -16,6 +16,46 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
+    grid-template-rows: auto auto;
+}
+
+.task-date {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.task-title {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.task-importance {
+    grid-row: 1;
+    grid-column: 3;
+}
+
+.task-checkbox-label {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.task-checkbox {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.task-description {
+    grid-row: 2;
+    grid-column: 2 / span 2;
+}
+
+.task-edit-button{
+    grid-row: 1;
+    grid-column: 4;
+}
+.task-delete-button {
+    grid-row: 2;
+    grid-column: 4;
 }
 
 
@@ -98,19 +138,18 @@
 
     .task-description {
         grid-row: 2;
-        grid-column: 2 / span 4;
+        grid-column: 2 / span 3;
     }
 
     .task-checkbox-label {
         grid-row: 2;
         grid-column: 1;
     }
-
-    .task-checkbox {
+    .black-text,
+    .red-text {
         grid-row: 2;
         grid-column: 1;
     }
-
 
     .task-edit-button {
         grid-row: 3;
@@ -154,13 +193,25 @@ ul {
 }
 
 .new-task-button {
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    align-self: flex-start;
     display: inline-block;
-    min-width: fit-content;
+}
+
+.new-task-button {
+    display: inline-block;
+    background-color: #1176b9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.new-task-button:hover {
+    background-color: #0f5a8b;
+}
+
+.new-task-button:focus {
+    outline: none;
 }
 
 .sort-button {
@@ -182,5 +233,41 @@ ul {
 
 .sort-button .arrow-icon-down::after {
     content: "▼";
+    color: black;
+}
+
+.toggle-mode-button {
+    padding: 10px 20px;
+    background-color: #1176b9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.toggle-mode-button:hover {
+    background-color: #0f5a8b;
+}
+
+.toggle-mode-button:focus {
+    outline: none;
+}
+
+#toggleModeIcon {
+    margin-right: 5px;
+}
+.dark-mode {
+    background-color: #000;
+    color: #fff;
+}
+
+.red-text {
+    color: red;
+    text-decoration: line-through;
+}
+
+.black-text {
     color: black;
 }

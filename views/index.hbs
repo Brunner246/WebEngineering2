@@ -1,5 +1,4 @@
 <link rel="stylesheet" type="text/css" href="/css/tasks.css">
-
 <div class="container-tasks">
     <h3 class="filter-heading">Filter Options:</h3>
     <div class="filter-container">
@@ -28,7 +27,7 @@
                     <span class="{{#if_eq sortDirection.orderBy 'importance'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
                 </button>
             </form>
-            <form action="/completed" method="get">
+            <form action="/sort" method="get">
                 <input type="hidden" name="orderBy" value="completed">
                 <button id="sortButtonCompleted" class="sort-button" aria-expanded="false">
                     Completed
@@ -36,14 +35,15 @@
             </form>
         </div>
     </div>
-    {{#if tasks.length}}
-        <form action="/new" method="get">
-            <button id="newTask" class="new-task-button" aria-expanded="false">
-                &#x2795; New Task
-            </button>
-            <h2>All Tasks:</h2>
-        </form>
 
+    <form action="/new" method="get">
+        <button id="newTask" class="new-task-button" aria-expanded="false">
+            &#x2795; New Task
+        </button>
+    </form>
+
+    {{#if tasks.length}}
+        <h2>All Tasks:</h2>
         <ul>
             {{#each tasks}}
                 <li>
@@ -51,13 +51,15 @@
                         <span class="task-date">{{this.dueDate}}</span>
                         <span class="task-title">{{this.title}}</span>
                         <span class="task-description">{{this.description}}</span>
-                        <span class="task-importance">{{this.importance}}</span>
-                        <form action="/{{this._id}}/state" method="post" class="task-checkbox-label">
-                            <input type="hidden" name="_method" value="PUT">
-                            <input type="checkbox" id="status" name="completed">
-                            <label for="status">Open</label>
-                        </form>
-                        <form action="/{{this._id}}/edit" method="get" class="task-edit-button">
+                        <span class="task-importance">
+                            {{#times this.importance}}
+                                <span class="flash-symbol">⚡</span>
+                            {{/times}}
+                        </span>
+                        <label class="{{#if_eq this.completed 'on'}}red-text{{else}}black-text{{/if_eq}}">
+                            {{#if_eq this.completed 'on'}}closed{{else}}open{{/if_eq}}
+                        </label>
+                        <form action="/{{this._id}}/edit" method="post" class="task-edit-button">
                             <button type="submit">Edit</button>
                         </form>
                         <form action="/{{this._id}}/delete" method="post" class="task-delete-button">

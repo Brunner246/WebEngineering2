@@ -26,7 +26,7 @@ app.set('views', path.resolve('views'));
 app.use(express.static(path.resolve('public')));
 app.use(session({secret: 'casduichasidbnuwezrfinasdcvjkadfhsuilfuzihfioda', resave: false, saveUninitialized: true}));
 app.use(sessionUserSettings);
-app.use(bodyParser.urlencoded({extended: true})); // default was false
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use("/", taskRoutes);

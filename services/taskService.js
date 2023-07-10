@@ -7,7 +7,6 @@ const TaskImportance = {
     HIGH: 3,
     VERY_HIGH: 4,
     URGENT: 5
-
 }
 
 export class Task {
@@ -26,7 +25,6 @@ export class Task {
         }
         return `${aDueDate.getDate()}/${aDueDate.getMonth() + 1}/${aDueDate.getFullYear()}`;
     }
-
 }
 
 export class TaskStore {
@@ -73,15 +71,23 @@ export class TaskStore {
         });
     }
 
-    update(id, description) {
+    update(id, title, importance, dueDate, completed, description) {
         return new Promise((resolve, reject) => {
-            this.db.update({_id: id}, {$set: {description}}, {}, (err, numUpdated) => {
+            this.db.update({_id: id}, {
+                $set: {
+                    title,
+                    importance,
+                    dueDate,
+                    completed,
+                    description
+                }
+            }, {}, (err, numUpdated) => {
                 if (err) {
                     reject(err);
                 } else if (numUpdated === 0) {
                     resolve(null);
                 } else {
-                    resolve({_id: id, description});
+                    resolve({_id: id, title, importance, dueDate, completed, description});
                 }
             });
         });
@@ -99,10 +105,9 @@ export class TaskStore {
         });
     }
 
-
     completed() {
         return new Promise((resolve, reject) => {
-            this.db.find({state: "false"}, (err, tasks) => {
+            this.db.find({completed: true}, (err, tasks) => {
                 if (err) {
                     reject(err);
                 } else {

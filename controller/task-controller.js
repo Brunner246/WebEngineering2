@@ -6,19 +6,21 @@ export class TaskController {
         const {title, description, dueDate, importance} = req.body;
         try {
             const taskId = await taskStore.add(title, description, dueDate, importance);
-            res.redirect(`/${taskId}/edit`);
+            res.redirect('/');
         } catch (error) {
             res.status(500).render('error', { error });
         }
     }
-
     async renderTask(req, res) {
-        res.redirect("/");
+        try {
+            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings});
+        } catch (error) {
+            res.render('error', {error});
+        }
     }
 
     async createAndRenderTask(req, res) {
         try {
-            // TODO: get rid off code repetition
             const {title, description, dueDate, importance} = req.body;
             await taskStore.add(title, description, dueDate, importance);
             res.redirect("/");
@@ -26,7 +28,6 @@ export class TaskController {
             res.render('error', {error});
         }
     }
-
 
     async deleteTask(req, res) {
         const id = req.params.id;
@@ -42,7 +43,6 @@ export class TaskController {
         }
     }
 
-
     async getTaskDetails(req, res) {
         const id = req.params.id;
         try {
@@ -50,37 +50,41 @@ export class TaskController {
             if (task) {
                 res.render('taskDetails', {task});
             } else {
-                res.render('taskDetails');
+                console.log('Task not found');
+                res.render('error', {error: 'Task not found'});
             }
         } catch (error) {
             res.render('error', {error});
         }
     }
 
+    async createNewTask(req, res) {
+        res.render('taskDetails', {});
+    }
+
+
     async updateTask(req, res) {
-        const {id, description} = req.params;
+        const { id } = req.params;
+        const { title, importance, dueDate, completed, description } = req.body;
         try {
-            const task = await taskStore.update(id, description);
+            const task = await taskStore.update(id, title, importance, dueDate, completed === 'on', description);
             if (task) {
                 res.redirect('/');
             } else {
-                res.render('taskNotFound');
+                res.status(404).render('error', { error: 'Task not found' });
             }
         } catch (error) {
-            res.render('error', {error});
+            res.render('error', { error });
         }
     }
 
     async setState(req, res) {
-        const id = req.params.id;
-        const completed = req.body.completed === "on";
+        const taskId = req.params.id;
+        const completed = req.body.completed === 'on';
+
         try {
-            const task = await taskStore.updateState(id, completed);
-            if (task) {
-                res.redirect('/');
-            } else {
-                res.render('taskNotFound');
-            }
+            await taskStore.update(taskId, null, null, null, completed, null);
+            res.redirect('/');
         } catch (error) {
             res.render('error', {error});
         }
