@@ -22,15 +22,14 @@
             </form>
             <form action="/tasks/sort" method="get">
                 <input type="hidden" name="orderBy" value="importance">
-                <input type="hidden" name="orderDirection" value="{{sortDirection.sortDirection}}">
+                <input type="hidden" name="orderDirection" value="{{sortDirection.orderDirection}}">
                 <button id="sortButtonImportant" class="sort-button" aria-expanded="false">
                     Importance
                     <span class="{{#if_eq sortDirection.orderBy 'importance'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
                 </button>
             </form>
-            <form action="/tasks/sort" method="get">
+            <form action="/tasks/completed" method="get">
                 <input type="hidden" name="orderBy" value="completed">
-                <input type="hidden" name="orderDirection" value="{{sortDirection.sortDirection}}">
                 <button id="sortButtonCompleted" class="sort-button" aria-expanded="false">
                     Completed
                 </button>
