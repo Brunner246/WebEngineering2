@@ -21,13 +21,13 @@ export class TaskController {
     async createAndRenderTask(req, res) {
         try {
             // TODO: get rid off code repetition
-            const { title, description, dueDate, importance } = req.body;
+            const {title, description, dueDate, importance} = req.body;
             await taskStore.add(title, description, dueDate, importance);
             const tasks = await taskStore.all();
             const sortDirection = req.userSettings.orderDirection;
-            res.render('allTasks', { tasks, sortDirection });
+            res.render('allTasks', {tasks, sortDirection});
         } catch (error) {
-            res.render('error', { error });
+            res.render('error', {error});
         }
     }
 
@@ -98,7 +98,7 @@ export class TaskController {
         }
     }
 
-    async getCompletedTasks(req, res) {
+    async getOpenTasks(req, res) {
         try {
             res.render('allTasks', {
                 tasks: await taskStore.completed(),
@@ -110,14 +110,15 @@ export class TaskController {
     }
 
     async sortTasks(req, res) {
-        // TODO: implement sorting by dueDate, creationDate, importance URL params (e.g. /tasks/sort?orderBy=dueDate&orderDirection=desc)
         const {orderBy, orderDirection} = req.userSettings;
-        let sortFunction;
 
+        let sortFunction;
         if (orderBy === "importance") {
             sortFunction = (a, b) => a.importance - b.importance;
         } else if (orderBy === "dueDate") {
             sortFunction = (a, b) => new Date(a.dueDate) - new Date(b.dueDate);
+        } else if (orderBy === "title") {
+            sortFunction = (a, b) => a.title.localeCompare(b.title);
         }
 
         try {
@@ -126,8 +127,6 @@ export class TaskController {
             if (sortFunction) {
                 tasks.sort(orderDirection === "-1" ? sortFunction : (a, b) => sortFunction(b, a));
             }
-            console.log("Title : " + req.userSettings.orderBy); // TODO: remove
-            console.log("Orderdirection : " + req.userSettings.orderDirection); // TODO: remove
             res.render('allTasks', {tasks: tasks, sortDirection: req.userSettings});
             req.userSettings.orderDirection = req.userSettings.orderDirection === "-1" ? "1" : "-1";
 
