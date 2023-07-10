@@ -27,3 +27,43 @@ describe('GET /', () => {
         expect(bodyContent).contain('Create a Task');
     });
 });
+
+describe('POST /tasks', () => {
+    it('create a task', async () => {
+        const newTask = {
+            title: 'test task',
+            description: 'test description',
+            dueDate: '2021-01-01',
+            importance: 4
+        };
+
+        const server = chai.request.agent(app);
+        const response = await server.post('/tasks').send({newTask});
+        server.close();
+
+     });
+});
+
+describe('sortFunction', () => {
+    it('should sort tasks by importance', () => {
+        const tasks = [
+            { importance: 3 },
+            { importance: 1 },
+            { importance: 2 }
+        ];
+
+        const orderBy = 'importance';
+
+        const sortedTasks = tasks.sort((a, b) => {
+            if (orderBy === 'importance') {
+                return a.importance - b.importance;
+            }
+        });
+
+        expect(sortedTasks).to.deep.equal([
+            { importance: 1 },
+            { importance: 2 },
+            { importance: 3 }
+        ]);
+    });
+});
