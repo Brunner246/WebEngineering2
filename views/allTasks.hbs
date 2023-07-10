@@ -51,7 +51,11 @@
                         <span class="task-date">{{this.dueDate}}</span>
                         <span class="task-title">{{this.title}}</span>
                         <span class="task-description">{{this.description}}</span>
-                        <span class="task-importance">{{this.importance}}</span>
+                        <span class="task-importance">
+                            {{#times this.importance}}
+                                <span class="flash-symbol">⚡</span>
+                            {{/times}}
+                        </span>
                         <form action="/tasks/{{this._id}}/state" method="post" class="task-checkbox-label">
                             <input type="hidden" name="_method" value="PUT">
                             <input type="checkbox" id="status" name="completed">
