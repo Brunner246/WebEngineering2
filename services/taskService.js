@@ -10,7 +10,7 @@ const TaskImportance = {
 
 }
 
-class Task {
+export class Task {
     constructor(title, description, dueDate, importance) {
         this.title = title;
         this.description = description;
@@ -32,7 +32,7 @@ class Task {
     }
 }
 
-class TaskStore {
+export class TaskStore {
     constructor() {
         this.db = new Datastore({filename: 'tasks.db', autoload: true});
     }

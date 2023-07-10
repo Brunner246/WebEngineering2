@@ -8,7 +8,7 @@ export class TaskController {
             await taskStore.add(title, description, dueDate, importance);
             res.redirect("/");
         } catch (error) {
-            res.render('error', {error});
+            res.status(500).render('error', { error });
         }
     }
 
