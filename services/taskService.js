@@ -32,6 +32,7 @@ export class TaskStore {
         this.db = new Datastore({filename: './data/tasks.db', autoload: true});
     }
 
+
     add(title, description, dueDate, importance) {
         const task = new Task(title, description, dueDate, importance);
         return new Promise((resolve, reject) => {
@@ -39,7 +40,7 @@ export class TaskStore {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(newTask._id);
+                    resolve(newTask); // Resolve with the entire newTask object
                 }
             });
         });

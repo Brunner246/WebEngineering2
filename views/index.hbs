@@ -28,7 +28,15 @@
                 </button>
             </form>
             <form action="/sort" method="get">
-                <input type="hidden" name="orderBy" value="completed">
+                <input type="hidden" name="orderBy" value="title">
+                <input type="hidden" name="title" value="{{sortDirection.orderDirection}}">
+                <button id="sortButtonTitle" class="sort-button" aria-expanded="false">
+                    Title
+                    <span class="{{#if_eq sortDirection.orderBy 'title'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
+                </button>
+            </form>
+            <form action="/sort" method="get">
+                <input type="hidden" name="orderBy">
                 <button id="sortButtonCompleted" class="sort-button" aria-expanded="false">
                     Completed
                 </button>

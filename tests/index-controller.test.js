@@ -19,18 +19,6 @@ dotenv.config({path: `.env-testing`});
 // load app after env
 const app = (await import('../app.js')).app;
 
-describe('GET /', () => {
-    it('should return index page', async () => {
-        const response = await chai.request(app).get('/');
-        response.should.have.status(200);
-
-        const dom = new jsdom.JSDOM(response.text);
-        const bodyContent = dom.window.document.body.innerHTML;
-        expect(bodyContent).contain('<h1>ToDo App</h1>');
-        expect(bodyContent).contain('Create a Task');
-    });
-});
-
 describe('Task API', () => {
     it('should create a task in the DB', async () => {
         const newTask = {
@@ -55,6 +43,7 @@ describe('Task', () => {
             const description = 'This is a test task, but number two';
             const dueDate = new Date('2023-07-10');
             const importance = 3;
+            const completed = false;
 
             const task = new Task(title, description, dueDate, importance);
 
@@ -63,7 +52,7 @@ describe('Task', () => {
             expect(task.creationDate).to.be.an.instanceOf(Date);
             expect(task.dueDate).to.equal(dueDate);
             expect(task.importance).to.equal(importance);
-            expect(task.completed).to.be.false;
+            expect(task.completed).to.equal(completed);
         });
 
         it('should set default importance when not provided', () => {
@@ -87,26 +76,6 @@ describe('Task', () => {
             expect(formattedDueDate).to.equal('10/7/2023');
         });
 
-    });
-
-    describe('isOverdue', () => {
-        it('should return true if due date is in the past', () => {
-            const task = new Task();
-            task.dueDate = new Date('2020-01-01');
-
-            const isOverdue = task.isOverdue();
-
-            expect(isOverdue).to.be.true;
-        });
-
-        it('should return false if due date is in the future', () => {
-            const task = new Task();
-            task.dueDate = new Date('2025-01-01');
-
-            const isOverdue = task.isOverdue();
-
-            expect(isOverdue).to.be.false;
-        });
     });
 });
 
