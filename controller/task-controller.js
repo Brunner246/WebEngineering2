@@ -123,7 +123,9 @@ export class TaskController {
 
         try {
             let tasks = await taskStore.all();
-
+            if (orderBy === "completed") {
+                tasks = tasks.filter(task => task.completed === "on");
+            }
             if (sortFunction) {
                 tasks.sort(orderDirection === "-1" ? sortFunction : (a, b) => sortFunction(b, a));
             }

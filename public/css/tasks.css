@@ -11,12 +11,12 @@
 .task {
     display: grid;
     grid-gap: 10px;
-    align-items: center;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr
 }
 
 .task-date {
@@ -34,15 +34,6 @@
     grid-column: 3;
 }
 
-.task-checkbox-label {
-    grid-row: 2;
-    grid-column: 1;
-}
-
-.task-checkbox {
-    grid-row: 2;
-    grid-column: 1;
-}
 
 .task-description {
     grid-row: 2;
