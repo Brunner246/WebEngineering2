@@ -1,38 +1,75 @@
-<head>
-    <meta charset="UTF-8">
-    <title>ToDo App</title>
-</head>
-
-<body>
-<div class="container">
-    <p class="custom-title">Create a Task</p>
-    <form action="/tasks" method="post">
-        <label for="title">Task Title:</label>
-        <input type="text" id="title" name="taskTitle" placeholder="Enter Title..." required>
-
-        <label>Importance:</label>
-        <label for="importance"></label><input type="number" id="importance" name="importance" min="0" max="5" value="0">
-
-        <label>Due Date:</label>
-        <label for="dueDate"></label><input type="date" id="dueDate" name="dueDate">
-
-        <div class="finished-container">
-            <label class="finished-label">
-                <span>Finished:</span>
-                <input type="checkbox" id="finished" name="finished">
-            </label>
+<link rel="stylesheet" type="text/css" href="/css/tasks.css">
+<div class="container-tasks">
+    <h3 class="filter-heading">Filter Options:</h3>
+    <div class="filter-container">
+        <div class="filter-toggle">
+            <form action="/sort" method="get">
+                <input type="hidden" name="orderBy" value="dueDate">
+                <input type="hidden" name="orderDirection" value="{{sortDirection.orderDirection}}">
+                <button id="sortButtonDueDate" class="sort-button" aria-expanded="false">
+                    Due Date
+                    <span class="{{#if_eq sortDirection.orderBy 'dueDate'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
+                </button>
+            </form>
+            <form action="/sort" method="get">
+                <input type="hidden" name="orderBy" value="creationDate">
+                <input type="hidden" name="orderDirection" value="{{sortDirection.orderDirection}}">
+                <button id="sortButtonCreationDate" class="sort-button" aria-expanded="false">
+                    Creation Date
+                    <span class="{{#if_eq sortDirection.orderBy 'creationDate'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
+                </button>
+            </form>
+            <form action="/sort" method="get">
+                <input type="hidden" name="orderBy" value="importance">
+                <input type="hidden" name="orderDirection" value="{{sortDirection.orderDirection}}">
+                <button id="sortButtonImportant" class="sort-button" aria-expanded="false">
+                    Importance
+                    <span class="{{#if_eq sortDirection.orderBy 'importance'}}{{#if_eq sortDirection.orderDirection '-1'}}arrow-icon-up{{else}}arrow-icon-down{{/if_eq}}{{else}}arrow-icon-down{{/if_eq}}"></span>
+                </button>
+            </form>
+            <form action="/sort" method="get">
+                <input type="hidden" name="orderBy" value="completed">
+                <button id="sortButtonCompleted" class="sort-button" aria-expanded="false">
+                    Completed
+                </button>
+            </form>
         </div>
+    </div>
 
-        <label>Description:</label>
-        <label for="description"></label><textarea id="description" name="description" rows="4" placeholder="Enter task Description..."></textarea>
-
-        <div class="button-container">
-            <button class="column1" type="submit" formaction="/tasks">Create</button>
-            <button class="column2" type="submit" formaction="/tasks/create-overview">Create &amp; Overview</button>
-            <button class="column3" type="submit" formaction="/tasks/render" formnovalidate="formnovalidate">Overview</button>
-        </div>
+    <form action="/new" method="get">
+        <button id="newTask" class="new-task-button" aria-expanded="false">
+            &#x2795; New Task
+        </button>
     </form>
+
+    {{#if tasks.length}}
+        <h2>All Tasks:</h2>
+        <ul>
+            {{#each tasks}}
+                <li>
+                    <div class="task">
+                        <span class="task-date">{{this.dueDate}}</span>
+                        <span class="task-title">{{this.title}}</span>
+                        <span class="task-description">{{this.description}}</span>
+                        <span class="task-importance">
+                            {{#times this.importance}}
+                                <span class="flash-symbol">⚡</span>
+                            {{/times}}
+                        </span>
+                        <label class="{{#if_eq this.completed 'on'}}red-text{{else}}black-text{{/if_eq}}">
+                            {{#if_eq this.completed 'on'}}closed{{else}}open{{/if_eq}}
+                        </label>
+                        <form action="/{{this._id}}/edit" method="post" class="task-edit-button">
+                            <button type="submit">Edit</button>
+                        </form>
+                        <form action="/{{this._id}}/delete" method="post" class="task-delete-button">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No tasks found.</p>
+    {{/if}}
 </div>
-</body>
-
-

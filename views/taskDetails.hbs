@@ -1,0 +1,46 @@
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo App</title>
+</head>
+
+<body>
+<div class="container">
+    <p class="custom-title">{{#if task._id}}Update Task{{else}}Create Task{{/if}}</p>
+    <form action="/tasks" method="post">
+
+        <label for="title">Task Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter Title..." value="{{#if task.title}}{{task.title}}{{/if}}" required>
+
+        <label>Importance:</label>
+        <label for="importance"></label>
+        <input type="number" id="importance" name="importance" min="0" max="5" value="{{#if task.importance}}{{task.importance}}{{else}}0{{/if}}">
+
+        <label>Due Date:</label>
+        <label for="dueDate"></label>
+        <input type="date" id="dueDate" name="dueDate" value="{{#if task.dueDate}}{{task.dueDate}}{{/if}}">
+
+        <div class="finished-container">
+            <label class="finished-label">
+                <span>Finished:</span>
+                <input type="checkbox" id="finished" name="finished" value="{{#if task.completed}}checked{{/if}}">
+            </label>
+        </div>
+
+        <label>Description:</label>
+        <label for="description"></label>
+        <textarea id="description" name="description" rows="4" placeholder="Enter task Description..." >{{task.description}}</textarea>
+
+        <div class="button-container">
+        {{#if task._id}}
+            <button class="column1" type="submit" formaction="/tasks/{{task._id}}/update" formmethod="post">Update</button>
+            <button class="column2" type="submit" formaction="/tasks/{{task._id}}/update-overview">Update &amp; Overview</button>
+            <button class="column3" type="submit" formaction="/tasks/render" formnovalidate="formnovalidate">Overview</button>
+        {{else}}
+            <button class="column1" type="submit" formaction="/tasks">Create</button>
+            <button class="column2" type="submit" formaction="/tasks/create-overview">Create &amp; Overview</button>
+            <button class="column3" type="submit" formaction="/tasks/render" formnovalidate="formnovalidate">Overview</button>
+        {{/if}}
+        </div>
+    </form>
+</div>
+</body>

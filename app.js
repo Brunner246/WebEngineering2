@@ -4,7 +4,6 @@ import path from 'path';
 import session from 'express-session';
 import exphbs from 'express-handlebars';
 
-import {indexRoutes} from './routes/index-routes.js';
 import {taskRoutes} from './routes/task-routes.js';
 import {helpers} from './utils/handlebar-util.js'
 import {sessionUserSettings} from './utils/session-middleware.index.js'
@@ -27,9 +26,8 @@ app.set('views', path.resolve('views'));
 app.use(express.static(path.resolve('public')));
 app.use(session({secret: 'casduichasidbnuwezrfinasdcvjkadfhsuilfuzihfioda', resave: false, saveUninitialized: true}));
 app.use(sessionUserSettings);
-app.use(bodyParser.urlencoded({extended: true})); // default was false
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use("/", indexRoutes);
 app.use("/", taskRoutes);
 

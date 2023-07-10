@@ -10,41 +10,54 @@
 
 .task {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr auto auto;
     grid-gap: 10px;
     align-items: center;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
+    grid-template-rows: auto auto;
 }
 
 .task-date {
+    grid-row: 1;
     grid-column: 1;
 }
 
 .task-title {
+    grid-row: 1;
     grid-column: 2;
-}
-
-.task-description {
-    grid-column: 2;
-    grid-row: 2;
 }
 
 .task-importance {
+    grid-row: 1;
     grid-column: 3;
 }
 
-.task-edit-button {
-    grid-column: 4;
-    grid-row: 1;
+.task-checkbox-label {
+    grid-row: 2;
+    grid-column: 1;
 }
 
-.task-delete-button {
-    grid-column: 4;
+.task-checkbox {
     grid-row: 2;
+    grid-column: 1;
 }
+
+.task-description {
+    grid-row: 2;
+    grid-column: 2 / span 2;
+}
+
+.task-edit-button{
+    grid-row: 1;
+    grid-column: 4;
+}
+.task-delete-button {
+    grid-row: 2;
+    grid-column: 4;
+}
+
 
 .task-checkbox {
     display: grid;
@@ -81,28 +94,76 @@
 .filter-container {
     display: flex;
     justify-content: space-between;
-    /*align-items: center;*/
     margin-bottom: 20px;
 }
 
+.flash-symbol {
+    color: yellow;
+    margin-right: -10px;
+}
+
 /* Mobile Styles */
-@media (max-width: 600px) {
+@media (max-width: 500px) {
     .filter-toggle {
-        display: flex;
-        flex-direction: column;
         align-items: flex-start;
         margin-bottom: 10px;
-
+        align-content: center;
+        flex-grow: 1;
     }
 
     .filter-toggle button {
         margin-bottom: 5px;
         width: 100%;
     }
+
+    .task {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .task-date {
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .task-title {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .task-importance {
+        text-align: right;
+        grid-row: 1;
+        grid-column: 3;
+    }
+
+    .task-description {
+        grid-row: 2;
+        grid-column: 2 / span 3;
+    }
+
+    .task-checkbox-label {
+        grid-row: 2;
+        grid-column: 1;
+    }
+    .black-text,
+    .red-text {
+        grid-row: 2;
+        grid-column: 1;
+    }
+
+    .task-edit-button {
+        grid-row: 3;
+        grid-column: 1 / span 3;
+    }
+
+    .task-delete-button {
+        grid-row: 4;
+        grid-column: 1 / span 3;
+    }
 }
 
 /* Desktop Styles */
-@media (min-width: 601px) {
+@media (min-width: 501px) {
     .filter-header {
         flex: 1 1 auto;
     }
@@ -127,24 +188,35 @@
     margin-left: 10px;
 }
 
-
 ul {
     list-style-type: none;
 }
 
 .new-task-button {
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    align-self: flex-start;
     display: inline-block;
-    min-width: fit-content;
+}
+
+.new-task-button {
+    display: inline-block;
+    background-color: #1176b9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.new-task-button:hover {
+    background-color: #0f5a8b;
+}
+
+.new-task-button:focus {
+    outline: none;
 }
 
 .sort-button {
-    display: flex;
     align-items: center;
+    text-align: center;
 }
 
 .sort-button .arrow-icon {
@@ -164,36 +236,38 @@ ul {
     color: black;
 }
 
+.toggle-mode-button {
+    padding: 10px 20px;
+    background-color: #1176b9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
-/*.sort-button-due-date .arrow-icon-up::after {*/
-/*    content: "▲";*/
-/*    color: black;*/
-/*}*/
+.toggle-mode-button:hover {
+    background-color: #0f5a8b;
+}
 
-/*.sort-button-due-date .arrow-icon-down::after {*/
-/*    content: "▼";*/
-/*    color: black;*/
-/*}*/
+.toggle-mode-button:focus {
+    outline: none;
+}
 
-/*.sort-button-creation-date .arrow-icon-up::after {*/
-/*    content: "▲";*/
-/*    color: black;*/
-/*}*/
+#toggleModeIcon {
+    margin-right: 5px;
+}
+.dark-mode {
+    background-color: #000;
+    color: #fff;
+}
 
-/*.sort-button-creation-date .arrow-icon-down::after {*/
-/*    content: "▼";*/
-/*    color: black;*/
-/*}*/
+.red-text {
+    color: red;
+    text-decoration: line-through;
+}
 
-
-/*.sort-button .arrow-icon-up::after {*/
-/*    content: "▲";*/
-/*    color:  black;*/
-/*}*/
-
-/*.sort-button .arrow-icon-down::after {*/
-/*    content: "▼";*/
-/*    color: white;*/
-/*}*/
-
-
+.black-text {
+    color: black;
+}
