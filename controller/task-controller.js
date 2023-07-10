@@ -5,17 +5,15 @@ export class TaskController {
     async createTask(req, res) {
         const {title, description, dueDate, importance} = req.body;
         try {
-            await taskStore.add(title, description, dueDate, importance);
-            res.redirect("/");
+            const taskId = await taskStore.add(title, description, dueDate, importance);
+            res.redirect(`/${taskId}/edit`);
         } catch (error) {
             res.status(500).render('error', { error });
         }
     }
 
     async renderTask(req, res) {
-        const tasks = await taskStore.all();
-        const sortDirection = req.userSettings.orderDirection;
-        res.render('allTasks', {tasks, sortDirection});
+        res.redirect("/");
     }
 
     async createAndRenderTask(req, res) {
@@ -23,9 +21,7 @@ export class TaskController {
             // TODO: get rid off code repetition
             const {title, description, dueDate, importance} = req.body;
             await taskStore.add(title, description, dueDate, importance);
-            const tasks = await taskStore.all();
-            const sortDirection = req.userSettings.orderDirection;
-            res.render('allTasks', {tasks, sortDirection});
+            res.redirect("/");
         } catch (error) {
             res.render('error', {error});
         }
@@ -37,7 +33,7 @@ export class TaskController {
         try {
             const task = await taskStore.delete(id);
             if (task) {
-                res.redirect('/tasks');
+                res.redirect('/');
             } else {
                 res.render('taskNotFound');
             }
@@ -47,14 +43,14 @@ export class TaskController {
     }
 
 
-    async editTask(req, res) {
+    async getTaskDetails(req, res) {
         const id = req.params.id;
         try {
             const task = await taskStore.get(id);
             if (task) {
-                res.render('editTask', {task});
+                res.render('taskDetails', {task});
             } else {
-                res.render('taskNotFound');
+                res.render('taskDetails');
             }
         } catch (error) {
             res.render('error', {error});
@@ -66,7 +62,7 @@ export class TaskController {
         try {
             const task = await taskStore.update(id, description);
             if (task) {
-                res.redirect('/tasks');
+                res.redirect('/');
             } else {
                 res.render('taskNotFound');
             }
@@ -81,7 +77,7 @@ export class TaskController {
         try {
             const task = await taskStore.updateState(id, completed);
             if (task) {
-                res.redirect('/tasks');
+                res.redirect('/');
             } else {
                 res.render('taskNotFound');
             }
@@ -92,7 +88,7 @@ export class TaskController {
 
     async getAllTasks(req, res) {
         try {
-            res.render('allTasks', {tasks: await taskStore.all(), sortDirection: await req.userSettings});
+            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings});
         } catch (error) {
             res.render('error', {error});
         }
@@ -100,7 +96,7 @@ export class TaskController {
 
     async getOpenTasks(req, res) {
         try {
-            res.render('allTasks', {
+            res.render('index', {
                 tasks: await taskStore.completed(),
                 sortDirection: await req.userSettings
             });
@@ -127,7 +123,7 @@ export class TaskController {
             if (sortFunction) {
                 tasks.sort(orderDirection === "-1" ? sortFunction : (a, b) => sortFunction(b, a));
             }
-            res.render('allTasks', {tasks: tasks, sortDirection: req.userSettings});
+            res.render('index', {tasks: tasks, sortDirection: req.userSettings});
             req.userSettings.orderDirection = req.userSettings.orderDirection === "-1" ? "1" : "-1";
 
         } catch (error) {
