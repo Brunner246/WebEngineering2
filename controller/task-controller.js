@@ -62,7 +62,7 @@ export class TaskController {
     }
 
     async updateTask(req, res) {
-        const {id, description} = req.body;
+        const {id, description} = req.params;
         try {
             const task = await taskStore.update(id, description);
             if (task) {
