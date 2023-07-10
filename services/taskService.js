@@ -20,26 +20,6 @@ class Task {
         this.completed = false;
     }
 
-    isCompleted() {
-        return this.completed;
-    }
-
-    setCompleted(completed) {
-        this.completed = completed;
-    }
-
-    getDescription() {
-        return this.description;
-    }
-
-    setDescription(description) {
-        this.description = description;
-    }
-
-    getCreationDate() {
-        return this.creationDate;
-    }
-
     formatDueDate(aDueDate) {
         if (aDueDate === null) {
             return null;
