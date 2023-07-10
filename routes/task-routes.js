@@ -4,7 +4,7 @@ import { taskController } from "../controller/task-controller.js";
 const router = express.Router();
 
 router.post("/tasks", taskController.createTask);
-router.get("/tasks/render", taskController.renderTask);
+router.post("/tasks/render", taskController.renderTask);
 router.post("/tasks/create-overview", taskController.createAndRenderTask);
 router.get("/tasks", taskController.getAllTasks);
 router.get("/tasks/sort", taskController.sortTasks);
