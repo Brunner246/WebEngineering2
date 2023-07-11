@@ -12,6 +12,7 @@ router.post("/tasks/:id/update-overview", taskController.updateTask);
 router.get("/", taskController.getAllTasks);
 router.get("/new", taskController.createNewTask);
 router.get("/sort", taskController.sortTasks);
+router.post("/filter", taskController.filterOpenTasks);
 router.post("/:id/edit", taskController.getTaskDetails);
 router.post("/:id/edit", taskController.updateTask);
 router.post("/:id/delete", taskController.deleteTask);
