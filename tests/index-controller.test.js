@@ -43,7 +43,7 @@ describe('Task', () => {
             const description = 'This is a test task, but number two';
             const dueDate = new Date('2023-07-10');
             const importance = 3;
-            const completed = false;
+            const completed = "on";
 
             const task = new Task(title, description, dueDate, importance);
 

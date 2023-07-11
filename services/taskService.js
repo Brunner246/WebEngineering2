@@ -16,7 +16,7 @@ export class Task {
         this.creationDate = new Date();
         this.dueDate = dueDate; // TODO this.formatDueDate(dueDate);
         this.importance = importance || TaskImportance.NONE
-        this.completed = false;
+        this.completed = "on";
     }
 
     formatDueDate(aDueDate) {
@@ -30,6 +30,7 @@ export class Task {
 export class TaskStore {
     constructor() {
         this.db = new Datastore({filename: './data/tasks.db', autoload: true});
+        this.filteredTasks = [];
     }
 
 
@@ -108,7 +109,7 @@ export class TaskStore {
 
     completed() {
         return new Promise((resolve, reject) => {
-            this.db.find({completed: true}, (err, tasks) => {
+            this.db.find({completed: "off"}, (err, tasks) => {
                 if (err) {
                     reject(err);
                 } else {
