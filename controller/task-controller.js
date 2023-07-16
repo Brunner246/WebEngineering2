@@ -156,6 +156,11 @@ export class TaskController {
             res.render('error', {error});
         }
     }
+
+    async toggleDarkMode(req, res) {
+        req.session.userSettings.darkMode = !req.session.userSettings.darkMode;
+        res.sendStatus(200);
+    }
 }
 
 export const taskController = new TaskController();
