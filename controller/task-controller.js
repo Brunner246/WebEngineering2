@@ -15,7 +15,7 @@ export class TaskController {
 
     async renderTask(req, res) {
         try {
-            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings});
+            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings, darkMode: req.userSettings.darkMode});
         } catch (error) {
             res.render('error', {error});
         }
@@ -119,7 +119,7 @@ export class TaskController {
                 tasks = taskStore.filteredTasks;
             }
 
-            res.render('index', {tasks, sortDirection: req.userSettings});
+            res.render('index', {tasks, sortDirection: req.userSettings, darkMode: req.userSettings.darkMode});
         } catch (error) {
             res.status(500).render('error', {error});
         }
@@ -139,7 +139,6 @@ export class TaskController {
 
         let tasks;
         try {
-            console.log(showAllTasks);
             if (showAllTasks === false) {
                 tasks = taskStore.filteredTasks;
             } else {
@@ -149,7 +148,7 @@ export class TaskController {
             if (sortFunction) {
                 tasks.sort(orderDirection === "-1" ? sortFunction : (a, b) => sortFunction(b, a));
             }
-            res.render('index', {tasks: tasks, sortDirection: req.userSettings});
+            res.render('index', {tasks: tasks, sortDirection: req.userSettings, darkMode: req.userSettings.darkMode});
             req.userSettings.orderDirection = req.userSettings.orderDirection === "-1" ? "1" : "-1";
 
         } catch (error) {
@@ -163,7 +162,11 @@ export class TaskController {
         } else {
             req.session.userSettings = { darkMode: true };
         }
-        res.redirect('/');
+        try {
+            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings, darkMode: req.userSettings.darkMode});
+        } catch (error) {
+            res.render('error', {error});
+        }
     }
 }
 
