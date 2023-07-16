@@ -16,7 +16,7 @@ export class Task {
         this.creationDate = new Date();
         this.dueDate = dueDate; // TODO this.formatDueDate(dueDate);
         this.importance = importance || TaskImportance.NONE
-        this.completed = "on";
+        this.completed = "OPEN";
     }
 
     formatDueDate(aDueDate) {

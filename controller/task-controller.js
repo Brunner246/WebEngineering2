@@ -6,8 +6,8 @@ export class TaskController {
     async createTask(req, res) {
         const {title, description, dueDate, importance} = req.body;
         try {
-            const taskId = await taskStore.add(title, description, dueDate, importance);
-            res.redirect('/');
+            const task = await taskStore.add(title, description, dueDate, importance);
+            res.redirect('/' + task._id + '/edit');
         } catch (error) {
             res.status(500).render('error', {error});
         }
@@ -67,26 +67,18 @@ export class TaskController {
 
     async updateTask(req, res) {
         const {id} = req.params;
-        const {title, importance, dueDate, completed, description} = req.body;
+        const {title, importance, dueDate, completed, description, button} = req.body;
         try {
-            const task = await taskStore.update(id, title, importance, dueDate, completed === 'on', description);
-            if (task) {
-                res.redirect('/');
+            const task = await taskStore.update(id, title, importance, dueDate, completed === 'on' ? "DONE" : "OPEN", description);
+            if (button === "update" || button === "create") {
+                if (task) {
+                    res.redirect('/' + task._id + '/edit');
+                } else {
+                    res.status(404).render('error', {error: 'Task not found'});
+                }
             } else {
-                res.status(404).render('error', {error: 'Task not found'});
+                res.redirect('/');
             }
-        } catch (error) {
-            res.render('error', {error});
-        }
-    }
-
-    async setState(req, res) {
-        const taskId = req.params.id;
-        const completed = req.body.completed === 'on';
-
-        try {
-            await taskStore.update(taskId, null, null, null, completed, null);
-            res.redirect('/');
         } catch (error) {
             res.render('error', {error});
         }
@@ -149,7 +141,6 @@ export class TaskController {
         try {
             console.log(showAllTasks);
             if (showAllTasks === false) {
-                console.log("showAllTasks");
                 tasks = taskStore.filteredTasks;
             } else {
                 tasks = await taskStore.all();
