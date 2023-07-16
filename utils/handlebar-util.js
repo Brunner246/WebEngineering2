@@ -1,6 +1,5 @@
 export const helpers = {
     'if_eq': function (a, b, opts) {
-        console.log("a: " + a + " b: " + b);
         if (a === b)
             return opts.fn(this);
         else
@@ -11,6 +10,9 @@ export const helpers = {
         for(let i = 0; i < n; ++i)
             accum += block.fn(i);
         return accum;
-    }
+    },
+    'if_done': function (completedState) {
+        return completedState === 'DONE';
+    },
 }
 

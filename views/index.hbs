@@ -40,6 +40,11 @@
                     Completed
                 </button>
             </form>
+            <form action="/dark-mode" method="post">
+                <button type="submit" id="darkModeButton" name="darkMode" class="sort-button" aria-expanded="false">
+                    Toggle Dark Mode
+                </button>
+            </form>
         </div>
     </div>
 
@@ -64,9 +69,9 @@
                             {{/times}}
                         </span>
                         <label class="{{#if_eq this.completed 'on'}}red-text{{else}}black-text{{/if_eq}}">
-                            {{#if_eq this.completed 'on'}}closed{{else}}open{{/if_eq}}
+                            {{#if_eq this.completed 'DONE'}}closed{{else}}open{{/if_eq}}
                         </label>
-                        <form action="/{{this._id}}/edit" method="post" class="task-edit-button">
+                        <form action="/{{this._id}}/edit" method="get" class="task-edit-button">
                             <button type="submit">Edit</button>
                         </form>
                         <form action="/{{this._id}}/delete" method="post" class="task-delete-button">

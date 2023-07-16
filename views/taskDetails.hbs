@@ -22,7 +22,7 @@
         <div class="finished-container">
             <label class="finished-label">
                 <span>Finished:</span>
-                <input type="checkbox" id="finished" name="finished" value="{{#if task.completed}}checked{{/if}}">
+                <input type="checkbox" id="completed" name="completed" {{#if (if_done task.completed)}}checked{{/if}}>
             </label>
         </div>
 
@@ -32,13 +32,13 @@
 
         <div class="button-container">
         {{#if task._id}}
-            <button class="column1" type="submit" formaction="/tasks/{{task._id}}/update" formmethod="post">Update</button>
-            <button class="column2" type="submit" formaction="/tasks/{{task._id}}/update-overview">Update &amp; Overview</button>
-            <button class="column3" type="submit" formaction="/tasks/render" formnovalidate="formnovalidate">Overview</button>
+            <button class="column1" type="submit" value="update" name="button" formaction="/tasks/{{task._id}}/update" formmethod="post">Update</button>
+            <button class="column2" type="submit" value="updateOverview" name="button" formaction="/tasks/{{task._id}}/update-overview" formmethod="post">Update &amp; Overview</button>
+            <button class="column3" type="submit" value="overview" name="button" formaction="/tasks/render" formmethod="get" formnovalidate="formnovalidate">Overview</button>
         {{else}}
-            <button class="column1" type="submit" formaction="/tasks">Create</button>
-            <button class="column2" type="submit" formaction="/tasks/create-overview">Create &amp; Overview</button>
-            <button class="column3" type="submit" formaction="/tasks/render" formnovalidate="formnovalidate">Overview</button>
+            <button class="column1" type="submit" value="create" name="button" formaction="/tasks" formmethod="post" >Create</button>
+            <button class="column2" type="submit" value="createOverview" name="button" formaction="/tasks/create-overview" formmethod="post">Create &amp; Overview</button>
+            <button class="column3" type="submit" value="overview" name="button" formaction="/tasks/render" formmethod="get" formnovalidate="formnovalidate">Overview</button>
         {{/if}}
         </div>
     </form>

@@ -6,8 +6,8 @@ export class TaskController {
     async createTask(req, res) {
         const {title, description, dueDate, importance} = req.body;
         try {
-            const taskId = await taskStore.add(title, description, dueDate, importance);
-            res.redirect('/');
+            const task = await taskStore.add(title, description, dueDate, importance);
+            res.redirect('/' + task._id + '/edit');
         } catch (error) {
             res.status(500).render('error', {error});
         }
@@ -15,7 +15,7 @@ export class TaskController {
 
     async renderTask(req, res) {
         try {
-            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings});
+            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings, darkMode: req.userSettings.darkMode});
         } catch (error) {
             res.render('error', {error});
         }
@@ -64,29 +64,20 @@ export class TaskController {
         res.render('taskDetails', {});
     }
 
-
     async updateTask(req, res) {
         const {id} = req.params;
-        const {title, importance, dueDate, completed, description} = req.body;
+        const {title, importance, dueDate, completed, description, button} = req.body;
         try {
-            const task = await taskStore.update(id, title, importance, dueDate, completed === 'on', description);
-            if (task) {
-                res.redirect('/');
+            const task = await taskStore.update(id, title, importance, dueDate, completed === 'on' ? "DONE" : "OPEN", description);
+            if (button === "update" || button === "create") {
+                if (task) {
+                    res.redirect('/' + task._id + '/edit');
+                } else {
+                    res.status(404).render('error', {error: 'Task not found'});
+                }
             } else {
-                res.status(404).render('error', {error: 'Task not found'});
+                res.redirect('/');
             }
-        } catch (error) {
-            res.render('error', {error});
-        }
-    }
-
-    async setState(req, res) {
-        const taskId = req.params.id;
-        const completed = req.body.completed === 'on';
-
-        try {
-            await taskStore.update(taskId, null, null, null, completed, null);
-            res.redirect('/');
         } catch (error) {
             res.render('error', {error});
         }
@@ -94,7 +85,7 @@ export class TaskController {
 
     async getAllTasks(req, res) {
         try {
-            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings});
+            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings, darkMode: req.userSettings.darkMode});
         } catch (error) {
             res.render('error', {error});
         }
@@ -104,7 +95,8 @@ export class TaskController {
         try {
             res.render('index', {
                 tasks: await taskStore.completed(),
-                sortDirection: await req.userSettings
+                sortDirection: await req.userSettings,
+                darkMode: req.userSettings.darkMode
             });
         } catch (error) {
             res.render('error', {error});
@@ -127,7 +119,7 @@ export class TaskController {
                 tasks = taskStore.filteredTasks;
             }
 
-            res.render('index', {tasks, sortDirection: req.userSettings});
+            res.render('index', {tasks, sortDirection: req.userSettings, darkMode: req.userSettings.darkMode});
         } catch (error) {
             res.status(500).render('error', {error});
         }
@@ -147,9 +139,7 @@ export class TaskController {
 
         let tasks;
         try {
-            console.log(showAllTasks);
             if (showAllTasks === false) {
-                console.log("showAllTasks");
                 tasks = taskStore.filteredTasks;
             } else {
                 tasks = await taskStore.all();
@@ -158,9 +148,22 @@ export class TaskController {
             if (sortFunction) {
                 tasks.sort(orderDirection === "-1" ? sortFunction : (a, b) => sortFunction(b, a));
             }
-            res.render('index', {tasks: tasks, sortDirection: req.userSettings});
+            res.render('index', {tasks: tasks, sortDirection: req.userSettings, darkMode: req.userSettings.darkMode});
             req.userSettings.orderDirection = req.userSettings.orderDirection === "-1" ? "1" : "-1";
 
+        } catch (error) {
+            res.render('error', {error});
+        }
+    }
+
+    async toggleDarkMode(req, res) {
+        if (req.session.userSettings) {
+            req.session.userSettings.darkMode = !req.session.userSettings.darkMode;
+        } else {
+            req.session.userSettings = { darkMode: true };
+        }
+        try {
+            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings, darkMode: req.userSettings.darkMode});
         } catch (error) {
             res.render('error', {error});
         }

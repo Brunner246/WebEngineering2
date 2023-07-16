@@ -16,7 +16,7 @@ export class Task {
         this.creationDate = new Date();
         this.dueDate = dueDate; // TODO this.formatDueDate(dueDate);
         this.importance = importance || TaskImportance.NONE
-        this.completed = "on";
+        this.completed = "OPEN";
     }
 
     formatDueDate(aDueDate) {
@@ -109,7 +109,7 @@ export class TaskStore {
 
     completed() {
         return new Promise((resolve, reject) => {
-            this.db.find({completed: "off"}, (err, tasks) => {
+            this.db.find({completed: "OPEN"}, (err, tasks) => {
                 if (err) {
                     reject(err);
                 } else {
