@@ -16,6 +16,6 @@ router.post("/filter", taskController.filterOpenTasks);
 router.get("/:id/edit", taskController.getTaskDetails);
 router.post("/:id/delete", taskController.deleteTask);
 router.get("/completed", taskController.getOpenTasks);
-router.get("/dark-mode", taskController.toggleDarkMode);
+router.post("/dark-mode", taskController.toggleDarkMode);
 
 export const taskRoutes = router;

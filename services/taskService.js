@@ -109,7 +109,7 @@ export class TaskStore {
 
     completed() {
         return new Promise((resolve, reject) => {
-            this.db.find({completed: "off"}, (err, tasks) => {
+            this.db.find({completed: "OPEN"}, (err, tasks) => {
                 if (err) {
                     reject(err);
                 } else {

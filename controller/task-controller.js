@@ -64,7 +64,6 @@ export class TaskController {
         res.render('taskDetails', {});
     }
 
-
     async updateTask(req, res) {
         const {id} = req.params;
         const {title, importance, dueDate, completed, description, button} = req.body;
@@ -86,7 +85,7 @@ export class TaskController {
 
     async getAllTasks(req, res) {
         try {
-            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings});
+            res.render('index', {tasks: await taskStore.all(), sortDirection: await req.userSettings, darkMode: req.userSettings.darkMode});
         } catch (error) {
             res.render('error', {error});
         }
@@ -96,7 +95,8 @@ export class TaskController {
         try {
             res.render('index', {
                 tasks: await taskStore.completed(),
-                sortDirection: await req.userSettings
+                sortDirection: await req.userSettings,
+                darkMode: req.userSettings.darkMode
             });
         } catch (error) {
             res.render('error', {error});

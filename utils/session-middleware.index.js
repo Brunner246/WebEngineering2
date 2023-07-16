@@ -8,7 +8,7 @@ export const sessionUserSettings = (req, res, next) => {
     if (orderDirection) {
         userSettings.orderDirection = orderDirection;
     }
-    if (darkMode !== undefined) {
+    if (darkMode) {
         userSettings.darkMode = { darkMode: darkMode === 'true'};
     }
     req.userSettings = req.session.userSettings = userSettings;

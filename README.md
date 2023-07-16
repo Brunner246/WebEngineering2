@@ -16,7 +16,5 @@ gut gelaufen ist unserer Meinung nach folgendes:
 
 Das ganze Projekt war eine Herausforderung für uns, da wir keine Erfahrung im Webumfeld mitbringen.
 Was es aus unserer sicht zu optimieren gibt:
-- redirect / render ist nicht immer optimal benutzt, entsprechend haben wir viele routes verwendet
-- entsprechend können routes auf ein minimum reduziert werden
-- sorting nach neuanlage Tasks beibehalten (war aber nicht klar ob Anforderung oder nicht)
-- dark mode - so viel zeit für das aufgewendet und es funktioniert noch immer nicht. wo das problem liegt wissen wir leider nicht.
+- sorting nach Neuanlage eines Tasks beibehalten ist nicht der Fall (war aber nicht klar ob Anforderung oder nicht)
+- dark mode - so viel zeit für das aufgewendet und es funktioniert nicht

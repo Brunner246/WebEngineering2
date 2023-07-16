@@ -40,9 +40,8 @@
                     Completed
                 </button>
             </form>
-            <form action="/dark-mode" method="get">
-                <input type="hidden" name="darkMode" value="{{#if userSettings.darkMode}}false{{else}}true{{/if}}">
-                <button id="darkModeButton" class="sort-button" aria-expanded="false">
+            <form action="/dark-mode" method="post">
+                <button type="submit" id="darkModeButton" name="darkMode" class="sort-button" aria-expanded="false">
                     Toggle Dark Mode
                 </button>
             </form>
