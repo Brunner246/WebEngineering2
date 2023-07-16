@@ -40,10 +40,11 @@
     grid-column: 2 / span 2;
 }
 
-.task-edit-button{
+.task-edit-button {
     grid-row: 1;
     grid-column: 4;
 }
+
 .task-delete-button {
     grid-row: 2;
     grid-column: 4;
@@ -246,10 +247,7 @@ ul {
     outline: none;
 }
 
-#toggleModeIcon {
-    margin-right: 5px;
-}
-.dark-mode {
+.dark-mode .container-tasks {
     background-color: #000;
     color: #fff;
 }

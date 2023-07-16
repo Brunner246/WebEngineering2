@@ -158,8 +158,12 @@ export class TaskController {
     }
 
     async toggleDarkMode(req, res) {
-        req.session.userSettings.darkMode = !req.session.userSettings.darkMode;
-        res.sendStatus(200);
+        if (req.session.userSettings) {
+            req.session.userSettings.darkMode = !req.session.userSettings.darkMode;
+        } else {
+            req.session.userSettings = { darkMode: true };
+        }
+        res.redirect('/');
     }
 }
 

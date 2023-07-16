@@ -7,11 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Todo</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    {{#if dark}}
+    {{#if userSettings.darkMode}}
         <style>
             body {
                 background: black;
                 color: white;
+            }
+
+            .container-tasks {
+                background-color: #ffffff;
             }
         </style>
     {{/if}}

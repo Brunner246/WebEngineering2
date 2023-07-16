@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/css/tasks.css">
-<div class="container-tasks {{#if darkMode}}dark-mode{{/if}}">
+<div class="container-tasks">
     <h3 class="filter-heading">Filter Options:</h3>
     <div class="filter-container">
         <div class="filter-toggle">
@@ -40,8 +40,9 @@
                     Completed
                 </button>
             </form>
-            <form action="/dark-mode" method="post">
-                    <button id="darkModeButton" class="sort-button" aria-expanded="false">
+            <form action="/dark-mode" method="get">
+                <input type="hidden" name="darkMode" value="{{#if userSettings.darkMode}}false{{else}}true{{/if}}">
+                <button id="darkModeButton" class="sort-button" aria-expanded="false">
                     Toggle Dark Mode
                 </button>
             </form>
